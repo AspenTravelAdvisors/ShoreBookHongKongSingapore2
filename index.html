@@ -1,0 +1,2728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Shore Book">
+<meta name="theme-color" content="#EDEAE1">
+<title>Shore Book · Hong Kong to Singapore</title>
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+:root{
+  --stone:#EDEAE1;
+  --sand:#FBFAF6;
+  --ink:#131E28;
+  --sea:#1D5A6E;
+  --sea-tint:#DDE7E9;
+  --rosso:#8C2F39;
+  --reel:#8A6B1F;
+  --olio:#4F6B2F;
+  --rule:#C9C6BB;
+  --mute:#6E7378;
+  --display:"Didot","Bodoni 72",Didot LT STD,"Hoefler Text",Georgia,serif;
+  --body:"Avenir Next",Avenir,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"Menlo","SF Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--stone);
+  color:var(--ink);
+  font-family:var(--body);
+  font-size:16px;
+  line-height:1.5;
+  padding-bottom:env(safe-area-inset-bottom);
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:620px;margin:0 auto;padding:0 18px 72px}
+
+/* ---------- brand strip ---------- */
+.brand{
+  display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;
+  padding:14px 0 12px;border-bottom:1px solid var(--rule);
+}
+.brand img{width:38px;height:38px;display:block;flex:0 0 auto}
+.brand-name{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);line-height:1.35;
+}
+.brand-name b{display:block;font-weight:400;color:var(--ink)}
+
+/* ---------- masthead ---------- */
+header{padding:18px 0 0}
+.kicker{
+  font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--mute);display:flex;justify-content:space-between;align-items:baseline;
+}
+h1{
+  font-family:var(--display);font-weight:400;font-size:44px;line-height:.95;
+  margin:8px 0 2px;letter-spacing:-.01em;
+}
+.sub{font-size:13px;color:var(--mute);margin:0 0 14px}
+
+/* ---------- port rail ---------- */
+.ports{display:flex;gap:6px;overflow-x:auto;padding:0 0 12px;margin:0 -18px;
+  padding-left:18px;padding-right:18px;scrollbar-width:none}
+.ports::-webkit-scrollbar{display:none}
+.port-btn{
+  flex:0 0 auto;background:transparent;border:1px solid var(--rule);
+  border-radius:2px;padding:7px 12px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.09em;text-transform:uppercase;color:var(--mute);cursor:pointer;
+}
+.port-btn[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--stone)}
+.port-btn:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+
+/* ---------- tide bar (signature) ---------- */
+.tide{border:1px solid var(--ink);background:var(--sand);padding:12px 13px 11px;margin:2px 0 18px}
+.tide-top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.tide-label{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.tide-clock{font-family:var(--display);font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.tide-clock.warn{color:var(--rosso)}
+.tide-track{
+  position:relative;height:16px;margin:10px 0 8px;border:1px solid var(--rule);
+  background:repeating-linear-gradient(-45deg,transparent 0 4px,var(--rule) 4px 5px);
+}
+.tide-fill{position:absolute;inset:0 auto 0 0;background:var(--sea-tint);
+  border-right:2px solid var(--sea);transition:width .6s ease}
+@media (prefers-reduced-motion:reduce){.tide-fill{transition:none}}
+.tide-foot{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:var(--mute)}
+.tide-foot input{
+  font-family:var(--mono);font-size:12px;border:0;border-bottom:1px solid var(--rule);
+  background:transparent;color:var(--ink);padding:1px 0;
+}
+.tide-foot input:focus{outline:none;border-bottom-color:var(--sea)}
+
+/* ---------- dock strip ---------- */
+.dock{border-left:3px solid var(--sea);padding:2px 0 2px 12px;margin:0 0 20px;font-size:14px}
+.dock b{font-weight:600}
+.dock span{display:block;color:var(--mute);font-size:13px;margin-top:2px}
+
+/* ---------- tabs ---------- */
+.tabs{display:flex;border-bottom:1px solid var(--rule);margin:0 0 18px}
+.tab{
+  flex:1 1 0;min-width:0;background:none;border:0;border-bottom:2px solid transparent;
+  margin-bottom:-1px;padding:9px 1px;font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--mute);cursor:pointer;
+}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--rosso)}
+.tab:focus-visible{outline:2px solid var(--sea);outline-offset:-2px}
+
+/* ---------- sounding rail (stops) ---------- */
+.rail{position:relative;margin:0;padding:0 0 0 34px;list-style:none}
+.rail::before{content:"";position:absolute;left:9px;top:10px;bottom:26px;
+  width:1px;background:var(--rule)}
+.stop{position:relative;padding:0 0 20px}
+.dot{
+  position:absolute;left:-34px;top:2px;width:19px;height:19px;border-radius:50%;
+  border:1px solid var(--ink);background:var(--stone);color:var(--ink);
+  font-family:var(--mono);font-size:10px;line-height:17px;text-align:center;
+  cursor:pointer;padding:0;
+}
+.stop.done .dot{background:var(--ink);color:var(--stone)}
+.stop.done .stop-name{text-decoration:line-through;color:var(--mute)}
+.dot:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.stop-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;
+  cursor:pointer}
+.stop-name{font-family:var(--display);font-size:21px;line-height:1.15}
+.stop-dur{font-family:var(--mono);font-size:11px;color:var(--mute);white-space:nowrap}
+.stop-body{display:none;padding:6px 0 0}
+.stop.open .stop-body{display:block}
+.stop-body p{margin:0 0 8px;font-size:14.5px}
+.look{border-left:2px solid var(--rosso);padding-left:10px;font-size:13.5px;color:var(--ink)}
+.look b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--rosso);display:block;margin-bottom:2px;font-weight:400}
+.leg{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--mute);margin-top:10px}
+
+/* ---------- food tour (a rail, but nothing to tick off) ---------- */
+.dot.static{cursor:default;line-height:17px}
+.stop.taste .dot{border-color:var(--olio);color:var(--olio)}
+.stop-where{display:block;font-family:var(--body);font-size:12.5px;line-height:1.35;
+  color:var(--mute);margin-top:3px}
+.stop-dur em{display:block;font-style:normal;font-size:10px;text-align:right;margin-top:3px}
+.look.ord{border-left-color:var(--olio)}
+.look.ord b{color:var(--olio)}
+
+/* ---------- the shopping circuit (same rail, sea ink) ---------- */
+.circ{border-top:1px solid var(--rule);margin-top:24px;padding-top:14px}
+.circ h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);font-weight:400;margin:0 0 10px}
+.stop.buy .dot{border-color:var(--sea);color:var(--sea)}
+.look.shop{border-left-color:var(--sea)}
+.look.shop b{color:var(--sea)}
+.brk{margin-top:12px;border-left:2px solid var(--rosso);padding:2px 0 2px 10px;
+  font-size:13px;color:var(--ink)}
+.geo{display:inline-block;margin-top:9px;font-family:var(--mono);font-size:11px;
+  color:var(--sea);text-decoration:none;border-bottom:1px solid var(--sea-tint)}
+.geo+.geo{margin-left:14px}
+.geo.btn{border:0;border-bottom:1px solid var(--sea-tint);background:none;padding:0;cursor:pointer}
+
+/* ---------- the drink (foot of the food tour) ---------- */
+.sips{border-top:1px solid var(--rule);margin-top:24px;padding-top:14px}
+.sips h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);font-weight:400;margin:0 0 6px}
+.sip{border:1px solid var(--rule);background:var(--sand);padding:11px 12px;margin:0 0 10px}
+.sip-kind{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--olio);display:block}
+.sip-kind.lt{color:var(--sea)}
+.sip-name{font-family:var(--display);font-size:21px;line-height:1.15;display:block;margin-top:2px}
+.sip-where{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:var(--mute);margin-top:5px}
+.sip-where em{font-style:normal;white-space:nowrap}
+.sip p{margin:8px 0 0;font-size:14px}
+.sip .note{color:var(--mute);font-size:13px}
+.sip .look{margin-top:9px}
+.look.lt{border-left-color:var(--sea)}
+.look.lt b{color:var(--sea)}
+
+/* ---------- projection ---------- */
+.proj{border:1px dashed var(--rule);background:var(--sand);padding:11px 13px;margin:0 0 20px;
+  font-size:13.5px}
+.proj b{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--mute);display:block;margin-bottom:3px;font-weight:400}
+.proj.tight{border-color:var(--rosso);border-style:solid}
+.proj.tight strong{color:var(--rosso)}
+
+/* ---------- lists ---------- */
+.entry{border-top:1px solid var(--rule);padding:12px 0}
+.entry:first-child{border-top:0}
+.entry-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.entry-name{font-family:var(--display);font-size:19px}
+.entry-tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--sea);white-space:nowrap;border:1px solid var(--sea-tint);padding:2px 5px}
+.entry p{margin:5px 0 0;font-size:14px;color:var(--ink)}
+.know li{font-size:14.5px;margin-bottom:9px}
+.know{padding-left:18px}
+
+/* ---------- glyphs (shared by chart and cards) ---------- */
+.gly{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:21px;height:21px;flex:0 0 21px;margin-top:1px;
+  font-family:var(--mono);font-size:10px;color:var(--sand);background:var(--ink);
+}
+.gly i{font-style:normal;display:block}
+.gly.k-walk{border-radius:50%}
+.gly.k-eat{background:var(--rosso)}
+.gly.k-buy{background:var(--sea);transform:rotate(45deg)}
+.gly.k-buy i{transform:rotate(-45deg)}
+.gly.k-screen{background:var(--reel);border-radius:50%;
+  box-shadow:inset 0 0 0 1px var(--reel), inset 0 0 0 2.4px var(--sand)}
+.gly.k-taste{background:var(--olio);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.gly.k-taste i{margin-top:6px;font-size:9px}
+
+/* ---------- cards ---------- */
+.card{border:1px solid var(--rule);background:var(--sand);padding:11px 12px;margin:0 0 10px}
+.card.hi{border-color:var(--ink);box-shadow:2px 2px 0 var(--rule)}
+.card-head{display:flex;gap:10px;align-items:flex-start}
+.card-title{flex:1;min-width:0}
+.card-name{font-family:var(--display);font-size:19px;line-height:1.15;display:block}
+.card-meta{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mute);display:block;margin-top:3px}
+.card-title .entry-tag{display:inline-block;margin-top:6px;white-space:normal}
+.card p{margin:7px 0 0;font-size:14px}
+.card .note{color:var(--mute);font-size:13px}
+.card .cue{font-family:var(--mono);font-size:11.5px;line-height:1.55;color:var(--ink);
+  border-left:2px solid var(--reel);background:rgba(138,107,31,.07);padding:6px 9px;margin-top:9px}
+.card .cue b{display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--reel);font-weight:400;margin-bottom:3px}
+.card-foot{display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;margin-top:10px;
+  font-family:var(--mono);font-size:10.5px}
+.card-foot a,.card-foot button{color:var(--sea);text-decoration:none;border:0;background:none;
+  font:inherit;padding:0;cursor:pointer;border-bottom:1px solid var(--sea-tint)}
+.coord{color:var(--mute);font-family:var(--mono);font-size:10.5px}
+.sec-note{font-size:12.5px;color:var(--mute);margin:0 0 14px}
+
+/* ---------- chart ---------- */
+.tools{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+.lay{
+  border:1px solid var(--rule);background:transparent;cursor:pointer;
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mute);padding:5px 7px;display:inline-flex;align-items:center;gap:6px;
+}
+.lay[aria-pressed="true"]{color:var(--ink);border-color:var(--ink)}
+.lay:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.sw{width:9px;height:9px;display:inline-block;background:var(--ink)}
+.sw.k-walk{border-radius:50%}
+.sw.k-eat{background:var(--rosso)}
+.sw.k-buy{background:var(--sea);transform:rotate(45deg)}
+.sw.k-screen{background:var(--reel);border-radius:50%}
+.sw.k-taste{background:var(--olio);clip-path:polygon(50% 0,100% 100%,0 100%)}
+.seg{display:inline-flex}
+.lay.wide{border-color:var(--ink);color:var(--ink)}
+.seg .lay+.lay{border-left-width:0}
+.lay.wide[aria-pressed="true"]{background:var(--ink);color:var(--stone)}
+
+/* ---------- the view: drawn chart or real map ---------- */
+.viewbox{position:relative;margin:0 0 12px;border:1px solid var(--ink);background:var(--sand)}
+.viewbox.chart{padding:8px}
+.viewbox.chart svg{display:block;width:100%;height:auto;max-height:70vh;margin:0 auto}
+.viewbox.map{height:min(62vh,470px);overflow:hidden;touch-action:none;background:#E4E0D6;
+  cursor:grab}
+.viewbox.map:active{cursor:grabbing}
+.chart-empty{font-family:var(--mono);font-size:11px;color:var(--mute);text-align:center;padding:40px 0}
+.tiles{position:absolute;inset:0;filter:saturate(.68) contrast(.97)}
+.tiles img{position:absolute;display:block;max-width:none;user-select:none;
+  -webkit-user-drag:none;pointer-events:none}
+.tiles img.dead{display:none}
+.ovl{position:absolute;inset:0;width:100%;height:100%}
+.ovl .pin circle,.ovl .pin rect{stroke:#FBFAF6;stroke-width:1.2}
+.ovl .pin .halo{fill:#FBFAF6;fill-opacity:.7;stroke:#131E28;stroke-width:1.4}
+.ovl .route{stroke:#131E28;stroke-width:1.6;opacity:.8;
+  filter:drop-shadow(0 0 1.5px rgba(251,250,246,.95))}
+.ovl .route.taste{stroke:#4F6B2F;stroke-dasharray:5 4}
+.attrib{position:absolute;right:0;bottom:0;background:rgba(251,250,246,.86);
+  font-family:var(--mono);font-size:8.5px;letter-spacing:.02em;color:var(--mute);padding:2px 5px}
+.attrib a{color:var(--sea)}
+.zoomctl,.fsctl{position:absolute;top:8px;display:flex;flex-direction:column;gap:5px}
+.zoomctl{left:8px}
+.fsctl{right:8px}
+.zoomctl button,.fsctl button{width:32px;height:32px;padding:0;border:1px solid var(--ink);
+  background:rgba(251,250,246,.93);color:var(--ink);font:17px/1 var(--mono);cursor:pointer;
+  display:flex;align-items:center;justify-content:center}
+.fsctl svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:square;pointer-events:none}
+
+/* full screen — native where the browser allows it, a fixed overlay everywhere else
+   (iPhone Safari still refuses requestFullscreen on anything but a video) */
+.viewbox.map.fs{position:fixed;inset:0;z-index:80;width:100%;height:100%;margin:0;border:0}
+.viewbox.map.fs .zoomctl,.viewbox.map.fs .fsctl{top:calc(8px + env(safe-area-inset-top))}
+.viewbox.map.fs .zoomctl{left:calc(8px + env(safe-area-inset-left))}
+.viewbox.map.fs .fsctl{right:calc(8px + env(safe-area-inset-right))}
+.viewbox.map.fs .attrib{bottom:env(safe-area-inset-bottom)}
+body.fsmap{overflow:hidden}
+
+/* ---------- locator bar ---------- */
+.locbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 10px}
+.locnote{font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--mute);
+  flex:1;min-width:0}
+.locnote strong{color:var(--sea);font-weight:400}
+.locnote.warn{color:var(--rosso)}
+.fromhere{font-family:var(--mono);font-size:10.5px;color:var(--sea)}
+
+/* ---------- proximity buzz ---------- */
+.buzzkey{display:flex;flex-wrap:wrap;gap:6px;margin:-2px 0 10px;align-items:center}
+.bzrow{
+  border:1px solid var(--rule);background:transparent;cursor:pointer;padding:4px 7px;
+  display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--mute);
+}
+.bzrow[data-off="true"]{opacity:.38}
+.bzrow:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.bzpat{display:inline-flex;align-items:center;gap:2px;height:8px}
+.bzpat i{display:block;height:8px;border-radius:1px;background:var(--ink)}
+.bzpat.k-eat i{background:var(--rosso)}
+.bzpat.k-taste i{background:var(--olio)}
+.bzpat.k-buy i{background:var(--sea)}
+.bzpat.k-screen i{background:var(--reel)}
+.bzr{color:var(--sea);text-transform:none}
+/* the borrowed iOS haptic — it has to be laid out to fire at all, so it is
+   hidden by size and opacity rather than by display:none */
+.haptic-switch{position:fixed;left:0;bottom:0;width:1px;height:1px;overflow:hidden;
+  opacity:.01;pointer-events:none;z-index:-1;margin:0}
+.haptic-switch input{margin:0;width:1px;height:1px;transform:scale(.02);transform-origin:0 0}
+.buzznote{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;color:var(--mute);
+  flex:1 0 100%;margin:0;line-height:1.55}
+.buzznote.warn{color:var(--rosso)}
+
+/* the hail — a buzz is silent, and an iPhone will not vibrate from a web page at all,
+   so every trigger also shows itself */
+.hail{position:fixed;left:0;right:0;bottom:0;z-index:120;display:flex;justify-content:center;
+  padding:0 14px calc(14px + env(safe-area-inset-bottom));pointer-events:none}
+.hail-in{
+  pointer-events:auto;display:flex;gap:10px;align-items:flex-start;width:100%;max-width:560px;
+  background:var(--sand);border:1px solid var(--ink);border-left-width:4px;
+  padding:10px 11px;box-shadow:3px 3px 0 rgba(19,30,40,.18);animation:hailup .26s ease;
+}
+.hail-in.k-walk{border-left-color:var(--ink)}
+.hail-in.k-eat{border-left-color:var(--rosso)}
+.hail-in.k-taste{border-left-color:var(--olio)}
+.hail-in.k-buy{border-left-color:var(--sea)}
+.hail-in.k-screen{border-left-color:var(--reel)}
+@keyframes hailup{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.hail-in{animation:none}}
+.hail-body{flex:1;min-width:0}
+.hail-kick{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);display:block}
+.hail-name{font-family:var(--display);font-size:18px;line-height:1.15;display:block;margin-top:2px}
+.hail-sub{font-family:var(--mono);font-size:10px;letter-spacing:.06em;color:var(--sea);
+  display:block;margin-top:3px}
+.hail-go{background:none;border:0;border-bottom:1px solid var(--sea-tint);color:var(--sea);
+  font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  padding:0;margin-top:7px;cursor:pointer}
+.hail-x{background:none;border:0;color:var(--mute);font:14px/1 var(--mono);cursor:pointer;
+  padding:2px 0 2px 6px;flex:0 0 auto}
+.hail-x:focus-visible,.hail-go:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+#me{pointer-events:none}   /* never let the blue dot swallow a tap on a pin */
+.me-acc{fill:#1D5A6E;fill-opacity:.13;stroke:#1D5A6E;stroke-width:.6;stroke-opacity:.45}
+.me-dot{fill:#1D5A6E;stroke:#FBFAF6;stroke-width:2}
+.me-arrow{fill:#1D5A6E}
+.me-lbl{font-family:Menlo,monospace;font-size:8px;fill:#1D5A6E;letter-spacing:.04em}
+.off{border-top:1px solid var(--rule);margin-top:16px;padding-top:12px}
+.off h3,.index h3{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--mute);font-weight:400;margin:0 0 8px}
+.offrow{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-top:1px solid var(--rule);
+  font-size:13.5px}
+.offrow:first-of-type{border-top:0}
+.offrow .bearing{font-family:var(--mono);font-size:10.5px;color:var(--sea);white-space:nowrap}
+.offrow .oname{flex:1;min-width:0}
+.offrow .osub{display:block;font-size:12px;color:var(--mute)}
+.index{margin-top:16px}
+.ixrow{display:flex;gap:9px;align-items:center;width:100%;text-align:left;background:none;
+  border:0;border-top:1px solid var(--rule);padding:7px 0;cursor:pointer;font:inherit;color:inherit}
+.ixrow:first-of-type{border-top:0}
+.ixrow .ixname{flex:1;min-width:0;font-size:14px;white-space:nowrap;overflow:hidden;
+  text-overflow:ellipsis}
+.ixrow .ixsub{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mute);white-space:nowrap}
+.ixrow[aria-current="true"] .ixname{font-weight:600}
+
+/* ---------- chart internals (inline SVG) ---------- */
+.gr line{stroke:#C9C6BB;stroke-width:.4;stroke-dasharray:2 3}
+.tk{font-family:Menlo,monospace;font-size:6.5px;fill:#6E7378;letter-spacing:.04em}
+.frm{fill:none;stroke:#C9C6BB;stroke-width:.8}
+.route{fill:none;stroke:#131E28;stroke-width:1;stroke-dasharray:4 3;opacity:.5}
+.route.taste{stroke:#4F6B2F;stroke-dasharray:1 3;opacity:.75}
+.lead{stroke:#6E7378;stroke-width:.5}
+.true{fill:#6E7378}
+.pin{cursor:pointer}
+.pin text{font-family:Menlo,monospace;font-size:9px;fill:#FBFAF6}
+.pin:focus-visible{outline:none}
+.pin .halo{fill:none;stroke:#131E28;stroke-width:1.2;visibility:hidden}
+.pin.on .halo,.pin:focus-visible .halo{visibility:visible}
+.bar line{stroke:#131E28;stroke-width:1}
+.rose line{stroke:#131E28;stroke-width:.8}
+.rose polygon{fill:#131E28}
+
+/* ---------- footer ---------- */
+footer{border-top:1px solid var(--rule);margin-top:26px;padding:14px 0 0;
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;color:var(--mute);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.reset{background:none;border:0;color:var(--mute);font:inherit;text-decoration:underline;
+  cursor:pointer;padding:0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<a class="brand" href="https://aspentraveladvisors.com" target="_blank" rel="noopener">
+  <img src="ata-logo.png" width="38" height="38" alt="Aspen Travel Advisors">
+  <span class="brand-name"><b>Aspen Travel Advisors</b>Aspen, Colorado</span>
+</a>
+
+<header>
+  <div class="kicker"><span>Shore Book</span><span id="today">—</span></div>
+  <h1 id="portName">—</h1>
+  <p class="sub" id="portSub">—</p>
+</header>
+
+<div class="ports" role="tablist" aria-label="Ports" id="portRail"></div>
+
+<section class="tide" aria-live="polite">
+  <div class="tide-top">
+    <span class="tide-label" id="tideLabel">Back on board in</span>
+    <span class="tide-clock" id="tideClock">—</span>
+  </div>
+  <div class="tide-track"><div class="tide-fill" id="tideFill" style="width:0%"></div></div>
+  <div class="tide-foot">
+    <label>Ashore <input type="time" id="ashore" step="300"></label>
+    <label><span id="aboardLabel">All aboard</span> <input type="time" id="allAboard" step="300"></label>
+  </div>
+</section>
+
+<div class="dock" id="dock"></div>
+
+<div class="tabs" role="tablist" aria-label="Sections">
+  <button class="tab" role="tab" data-tab="walk" aria-selected="true">Walk</button>
+  <button class="tab" role="tab" data-tab="eat" aria-selected="false">Eat</button>
+  <button class="tab" role="tab" data-tab="taste" aria-selected="false">Taste</button>
+  <button class="tab" role="tab" data-tab="buy" aria-selected="false">Buy</button>
+  <button class="tab" role="tab" data-tab="screen" aria-selected="false">Screen</button>
+  <button class="tab" role="tab" data-tab="chart" aria-selected="false">Chart</button>
+  <button class="tab" role="tab" data-tab="know" aria-selected="false">Know</button>
+</div>
+
+<main id="panel"></main>
+
+<footer>
+  <span>Hong Kong → Singapore · Luminara · Dec 2027 – Jan 2028</span>
+  <button class="reset" id="reset">Clear checkmarks</button>
+</footer>
+
+</div>
+
+<script>
+/* ============================================================
+   DATA — seven ports, Hong Kong to Singapore aboard Luminara,
+   28 December 2027 – 11 January 2028. Hours and prices drift;
+   treat as a guide. Every entry carries a coordinate, "lat,lon"
+   in decimal degrees — good to a block in the cities, and to the
+   village or beach on the islands, where that is all you need.
+   ============================================================ */
+const PORTS = [
+{
+  id:"hongkong", townKm:2.2, name:"Hong Kong", sub:"China SAR · embark Tuesday 28 December · sails 18:00",
+  aboard:"17:30", ashore:"09:00", tideLabel:"On board in",
+  dock:{t:"Embarkation day — the yacht sails at 18:00",
+        d:"Your boarding letter names the terminal: Ocean Terminal in Tsim Sha Tsui puts you on foot at the end of this walk; Kai Tak is a 20-minute taxi from it. Hand the bags to the hotel concierge or the pier in the morning and walk the day unencumbered."},
+  stops:[
+    {n:"Man Mo Temple", dur:25, leg:10,
+     w:"Built in 1847 for the gods of literature and of war — the two routes to office in imperial China — and still working. The smoke is real: giant incense coils hang from the ceiling and burn for weeks, each one paid for by a family with a name on a red tag.",
+     l:"The red tags dangling from the coils, and the gilt sedan chairs that carried the gods through the streets at festivals.",
+     x:"Free. Opens 08:00. Hollywood Road on either side is the antiques street — see Buy.",
+     c:"22.2840,114.1500"},
+    {n:"Tai Kwun", dur:40, leg:12,
+     w:"The Central Police Station, the Magistracy and Victoria Prison, a walled compound of 1864 onwards, turned inside out as a heritage and arts centre in 2018. The parade ground is the quietest open space in Central.",
+     l:"The prison cells in F Hall, left as they were, and the two Herzog & de Meuron blocks in cast-aluminium lattice bolted into the old walls.",
+     x:"Free entry. The Central–Mid-Levels escalator runs past the Hollywood Road gate — uphill until 10:00, downhill after.",
+     c:"22.2816,114.1543"},
+    {n:"Victoria Peak by the Peak Tram", dur:80, leg:25,
+     w:"A funicular of 1888, rebuilt in 2022, hauling up a gradient steep enough that the towers outside appear to lean. At the top the whole harbour lies below you, Kowloon behind it and the hills of the New Territories behind that.",
+     l:"Skip the paid terrace on the tower. Walk ten minutes along Lugard Road instead — the same view, free, from a path cantilevered off the hillside.",
+     x:"Lower terminus on Garden Road. Queues are worst late morning; book a timed ticket online. December is clear more often than summer, but the Peak can sit inside a cloud when the harbour is sunny.",
+     c:"22.2711,114.1497"},
+    {n:"The Star Ferry", dur:15, leg:4,
+     w:"Green-and-white ferries have crossed from Central to Tsim Sha Tsui since 1888. Nine minutes, a few dollars, and still the best view of the skyline anyone can buy.",
+     l:"The reversible wooden seat backs — the boat does not turn around, so the benches flip over to face the other way.",
+     x:"Central Pier 7. Upper deck is a dollar or two more and worth it. Tap in with an Octopus card.",
+     c:"22.2869,114.1612"},
+    {n:"Clock Tower & the Tsim Sha Tsui promenade", dur:25, leg:5,
+     w:"The clock tower of 1915 is all that is left of the Kowloon–Canton railway terminus, where passengers once stepped off the boat and on to a train for Peking and, eventually, Calais.",
+     l:"Look back across the water at Central and pick out the Bank of China tower — I. M. Pei's blades — against Norman Foster's HSBC building beside it.",
+     x:"The Museum of Art is next door and free on Wednesdays; on a Tuesday there is an entry fee and it is still worth the half hour.",
+     c:"22.2935,114.1694"},
+    {n:"The Peninsula lobby", dur:60, leg:8,
+     w:"Hong Kong's grand hotel since 1928, and afternoon tea in its lobby is the city's one ritual that has never gone out of fashion. It is also the last hour before the gangway.",
+     l:"The fleet of green Rolls-Royces in the forecourt, and the gilded ceiling you are sitting under.",
+     x:"Tea from 14:00; no reservations for most sittings, so the queue can be long by three. Smart casual. From here it is under ten minutes to Ocean Terminal.",
+     c:"22.2950,114.1718"}
+  ],
+  eat:[
+    {n:"Maxim's Palace", t:"Dim sum", d:"City Hall, on the harbour. The last big hall in Hong Kong still wheeling dim sum round on trolleys. Take a ticket at the door and point at things.", c:"22.2819,114.1617"},
+    {n:"Yat Lok", t:"Roast goose", d:"Stanley Street, Central. A narrow room with a Michelin star for one dish — goose on rice or on noodles. Share a table, eat fast.", c:"22.2817,114.1557"},
+    {n:"Kau Kee", t:"Noodles", d:"Gough Street. Beef brisket noodles since the 1930s; the curry brisket with e-fu noodles is the one. Cash, queue, no lingering.", c:"22.2842,114.1522"},
+    {n:"Tim Ho Wan, IFC", t:"Dim sum", d:"Under Hong Kong Station. The cheap Michelin dim sum chain; the baked barbecue pork buns are why. Convenient before the Peak Tram.", c:"22.2851,114.1582"},
+    {n:"The Peninsula Lobby", t:"Afternoon tea", d:"The tiered stand and the string quartet. Not cheap, not to be skipped.", c:"22.2950,114.1718"}
+  ],
+  tasteNote:"Hong Kong eats all day in small plates and plastic stools, and a morning in the lanes of Central is enough to cover the canon — milk tea, an egg tart, wonton, roast meat and brisket — without once sitting somewhere with tablecloths. Start early; most of these open between 08:00 and 11:00 and the queues build by noon.",
+  taste:[
+    {n:"Lan Fong Yuen", sp:"Milk tea and a pork chop bun", pr:"HK$40–60", dur:20, leg:3,
+     d:"A tin shack of a dai pai dong on Gage Street that claims to have invented silk-stocking milk tea — strained through a cloth bag until it looks like one. The claim is disputed; the tea is not.",
+     o:"Hot milk tea, and a pork chop bun. If you are feeling brave, the yuenyeung — see Drink this here.",
+     x:"Shares tables. Closed Sunday. Pay at the till on the way out.",
+     c:"22.2836,114.1545"},
+    {n:"Tai Cheong Bakery", sp:"Egg tart", pr:"HK$10–12", dur:10, leg:4,
+     d:"The shortcrust egg tart, served warm, on Lyndhurst Terrace since 1954. The last British governor, Chris Patten, was photographed eating them so often that they are still sold as 'Fat Patten's'.",
+     o:"One egg tart, warm. That is all.",
+     x:"Takeaway only. Eat it on the pavement like everybody else.",
+     c:"22.2831,114.1537"},
+    {n:"Mak's Noodle", sp:"Wonton noodles", pr:"HK$50–60", dur:20, leg:4,
+     d:"Wellington Street. The bowl is small on purpose — an old rule of the trade, so the noodles are eaten before they soften. Shrimp wonton, springy egg noodles, a clear broth of dried flounder.",
+     o:"Wonton noodles in soup. Add a plate of gai lan in oyster sauce if you are sharing.",
+     x:"Opens 11:00. Small bowl, fair price; order two if hungry.",
+     c:"22.2836,114.1540"},
+    {n:"Yat Lok", sp:"Roast goose leg on rice", pr:"HK$120–180", dur:25, leg:4,
+     d:"A Michelin-starred goose shop no wider than a corridor. The skin is lacquered, the fat has rendered, and the plum sauce is almost an afterthought.",
+     o:"Roast goose leg on rice, or on lai fun rice noodles in soup.",
+     x:"Opens around 10:00. Queue outside; tables are shared.",
+     c:"22.2817,114.1557"},
+    {n:"Kau Kee", sp:"Curry brisket noodles", pr:"HK$55–70", dur:20, leg:0,
+     d:"Gough Street, where the brisket has been simmering in the same master stock since before the war. Tony Leung eats here, the sign does not mention it.",
+     o:"Curry beef brisket with e-fu noodles. Or clear-broth brisket with ho fun if curry before noon is too much.",
+     x:"Opens 12:30. Closed Sundays and public holidays. Cash.",
+     c:"22.2842,114.1522"}
+  ],
+  sipNote:"Hong Kong's drinks come out of the cha chaan teng — the tea café born when British tea met Cantonese kitchens — rather than out of a bottle. Embarkation day is not a day for drinking anyway; these two are what a Hongkonger would order before noon.",
+  sip:[
+    {t:"local", n:"Yuenyeung", w:"Lan Fong Yuen, 2 Gage Street", pr:"HK$25–35",
+     d:"Coffee and milk tea poured into the same cup — named for the mandarin ducks that are always seen in pairs. Invented in the 1950s dai pai dongs for dock workers who wanted the caffeine of both. It tastes better than it sounds.",
+     o:"“Yuenyeung, hot” — or “dung yuenyeung” for iced.",
+     x:"Any cha chaan teng will make it. Lan Fong Yuen is on the food tour anyway.",
+     c:"22.2836,114.1545"},
+    {t:"light", n:"Iced lemon tea", w:"Mido Café, Temple Street, Yau Ma Tei", pr:"HK$30–40",
+     d:"Black tea, a stack of lemon slices and a long spoon to pound them. The drink of every Hong Kong lunchtime. Mido has been serving it since 1950 on a corner above Temple Street, with the tiles, the booths and the green window frames all still in place.",
+     o:"“Dung ling cha” — iced lemon tea. Ask for less sugar: “siu tim”.",
+     x:"Two stops north on the MTR from Tsim Sha Tsui, so it only fits if you are in Kowloon the night before. Otherwise any cha chaan teng pours the same drink.",
+     c:"22.3084,114.1710"}
+  ],
+  buy:[
+    {n:"Name chops on Man Wa Lane", d:"Stone seals carved with your name in Chinese characters, cut while you wait in a lane of stalls in Sheung Wan. Choose the stone, have the stall pick characters that sound like your name, collect an hour later with a pot of red paste.", c:"22.2863,114.1512"},
+    {n:"Hollywood Road antiques", d:"Galleries for serious Chinese ceramics and furniture on the road itself, and Cat Street below for curios and reproductions. The rule is simple: anything 'ancient' on Cat Street is not, and anything genuine on Hollywood Road comes with paperwork and an export licence.", c:"22.2847,114.1510"},
+    {n:"Tea", d:"Lock Cha Tea House in Hong Kong Park, in the grounds of Flagstaff House, sells and serves proper oolong and pu'er without the theatre. Buy a tin and they will brew a cup of it for you first.", c:"22.2779,114.1618"},
+    {n:"Tailoring — only with time", d:"The famous Kowloon tailors can turn a suit in days, not hours: two fittings minimum. On an embarkation day it cannot be done. If you arrive two or three days early, it can.", c:"22.2979,114.1720"}
+  ],
+  screen:[
+    {n:"Two IFC", f:"The Dark Knight", y:"2008", r:"Batman's leap",
+     d:"Batman stands on top of the tallest tower on the island, drops off it into the night and glides across to the building where Lau is hiding. It is the Hong Kong interlude, shot for real on the harbour front.",
+     q:"A little under an hour into a 152-minute film — the extraction of Lau, after Gordon's team fails to bring him back. The whole Hong Kong sequence runs about five minutes.",
+     x:"You pass the foot of it on the way to the Star Ferry.",
+     c:"22.2853,114.1590"},
+    {n:"Central–Mid-Levels Escalator", f:"Chungking Express", y:"1994", r:"Faye's apartment",
+     d:"Wong Kar-wai shot the second story on the covered escalator: Faye rides past Cop 663's flat, then lets herself in to clean it and rearrange his life. The flat was the cinematographer Christopher Doyle's own.",
+     q:"The second half of a 102-minute film — Faye's story starts around the 45-minute mark and the escalator recurs through it.",
+     x:"The escalator runs downhill until 10:00 and uphill after; ride it up from Queen's Road.",
+     c:"22.2828,114.1545"},
+    {n:"Chungking Mansions", f:"Chungking Express", y:"1994", r:"The woman in the blonde wig",
+     d:"A seventeen-storey warren of guesthouses, curry counters and money-changers on Nathan Road. The first story's drug-smuggling chase was shot handheld through its corridors, guerrilla style.",
+     q:"The first 45 minutes — the opening chase is the building itself.",
+     x:"Safe and busy by day. The ground floor currency exchangers give some of the best rates in the city.",
+     c:"22.2964,114.1722"},
+    {n:"Star Ferry", f:"The World of Suzie Wong", y:"1960", r:"The meeting",
+     d:"William Holden meets Nancy Kwan on the Star Ferry in the first scene; she tells him she is a rich man's daughter. She is not.",
+     q:"The first ten minutes.",
+     x:"The ferry is stop 4 of the walk.",
+     c:"22.2869,114.1612"},
+    {n:"Goldfinch Restaurant", f:"In the Mood for Love · 2046", y:"2000 · 2004", r:"The steak dinners",
+     d:"A 1960s Western-style restaurant in Causeway Bay, used for the two neighbours' dinners, where each orders the other's spouse's dish to see what it felt like.",
+     q:"The restaurant scenes sit in the middle third of the 98-minute film; most of the rest of the city was shot in Bangkok, because 1960s Hong Kong had already been demolished.",
+     x:"Off the walk — Causeway Bay, a short MTR ride east. Still open, still steak with mustard.",
+     c:"22.2799,114.1837"},
+    {n:"Monster Building, Quarry Bay", f:"Transformers: Age of Extinction · Ghost in the Shell", y:"2014 · 2017", r:"The courtyard",
+     d:"Five interlocking 1960s blocks of about 2,000 flats wrapped round a courtyard, so dense they became the stock image of Hong Kong. Optimus Prime crashes through; Scarlett Johansson walks through.",
+     q:"Transformers: the Hong Kong chase in the last hour. Ghost in the Shell: throughout, as backdrop.",
+     x:"Far off the walk — MTR to Tai Koo. People live here; a sign asks you not to linger with a camera. Five minutes and quietly.",
+     c:"22.2863,114.2176"}
+  ],
+  know:[
+    "The yacht sails at 18:00. All aboard is normally half an hour before — 17:30 on this book — but check the embarkation letter and change the clock above if it differs.",
+    "Buy an Octopus card on arrival (or add it to an iPhone wallet). It pays for the MTR, trams, the Star Ferry and most corner shops.",
+    "Late December is cool and dry: 15–20°C, a jacket in the evening. The harbour haze is thinnest after a northerly wind.",
+    "The Hong Kong dollar is pegged at about 7.8 to the US dollar. Cards everywhere except the old noodle shops, which are cash only.",
+    "Tipping is not expected; a 10% service charge is already on most restaurant bills."
+  ]
+},
+{
+  id:"halong", townKm:14, name:"Halong Bay", sub:"Vietnam · overnight · 30 December 08:00 – 31 December 20:00",
+  aboard:"19:30", ashore:"08:30",
+  dock:{t:"Hạ Long — two days, one night, in the bay",
+        d:"The yacht calls at the Hạ Long international cruise port at Hòn Gai (or anchors and tenders if the programme says so). The bay itself is a boat day, not a walk: the stops below are in the order a day boat takes them, with the legs on the water. Day two is for Hòn Gai town, the market and the museum."},
+  stops:[
+    {n:"Thiên Cung cave", dur:30, leg:5,
+     w:"The 'Heavenly Palace' cave, closest to the harbour and so the first stop of most boats. A lofty chamber of stalactites, lit in colours no geologist would choose.",
+     l:"The formations the guides name for you — dragons, a phoenix, an elephant. Ignore the lighting and the stone is remarkable.",
+     x:"About 45 minutes by boat from the harbour. Steep steps up from the landing.",
+     c:"20.9100,107.0526"},
+    {n:"Đầu Gỗ cave", dur:25, leg:20, by:"by boat",
+     w:"'Wooden Stakes' cave, where the general Trần Hưng Đạo is said to have stored the stakes he drove into the Bạch Đằng river bed in 1288 to impale the Mongol fleet at low tide.",
+     l:"The inscribed stele of 1917 at the entrance, left by the Khải Định emperor after his own visit.",
+     x:"Shares a landing and a ticket with Thiên Cung.",
+     c:"20.9114,107.0541"},
+    {n:"Trống Mái islet", dur:10, leg:30, by:"by boat",
+     w:"Two rocks leaning into each other, the 'fighting cocks' or the 'kissing rocks' depending who is guiding. The single most photographed shape in the bay; you see it from the boat.",
+     l:"Stand on the side of the deck facing it as you pass — the boats do not stop.",
+     x:"",
+     c:"20.9036,107.0626"},
+    {n:"Ti Tốp island", dur:60, leg:15, by:"by boat",
+     w:"A small island with a crescent of sand and about 400 steps to a pavilion on the summit, from which the bay is laid out as a map. Named for Gherman Titov, the Soviet cosmonaut, who visited with Hồ Chí Minh in 1962.",
+     l:"From the top, the lines of karst fading into each other in the haze, and the boats parked like a regatta below.",
+     x:"The climb takes 15 minutes, crowded on the stair. December water is too cold for most swimmers.",
+     c:"20.8541,107.0870"},
+    {n:"Sửng Sốt cave", dur:45, leg:20, by:"by boat",
+     w:"'Surprise' cave, the largest in the bay — three chambers of increasing size, the last big enough to lose a cathedral in. The French named it Grotte des Surprises in 1901.",
+     l:"The last chamber, and the view back out of the cave mouth over the anchorage on the way down.",
+     x:"A proper staircase and paved paths; allow the full 45 minutes.",
+     c:"20.8484,107.0938"},
+    {n:"Luồn cave by kayak or bamboo boat", dur:40, leg:0, by:"by boat",
+     w:"A low tunnel through the rock into an enclosed lagoon, a still lake inside a ring of cliffs. The only way in is at water level, in a kayak or a rowed bamboo boat.",
+     l:"The long-tailed macaques on the cliff faces inside the lagoon, and the silence after the passage.",
+     x:"Passage depends on the tide. Kayaks need both of you to paddle; the bamboo boats are rowed for you.",
+     c:"20.8524,107.1043"}
+  ],
+  eat:[
+    {n:"Chợ Hạ Long 1", t:"Market", d:"Hòn Gai's main market. The seafood hall downstairs, and the squid cake stalls — chả mực, the city's own dish. See the food tour.", c:"20.9519,107.0828"},
+    {n:"Hồng Hạnh", t:"Seafood", d:"A big Bãi Cháy seafood house of the kind every Vietnamese family knows: pick from the tanks, pay by weight. Ask the price before they cook.", c:"20.9553,107.0450"},
+    {n:"Cửa Vàng", t:"Seafood", d:"Hòn Gai, near the old ferry landing. Local and unfussy; the grilled squid and the clams with lemongrass.", c:"20.9510,107.0790"},
+    {n:"The day boat", t:"Lunch aboard", d:"Almost every bay boat serves lunch at anchor — prawns, crab, squid, a fish steamed with ginger. Honest and good; it is part of the ticket.", c:"20.8541,107.0870"}
+  ],
+  tasteNote:"Hạ Long has one great dish and it is the squid cake — chả mực, pounded by hand from the bay's squid until it springs, then fried. Everything else here is seafood by the kilo. Day two, in Hòn Gai, is when to eat it.",
+  taste:[
+    {n:"Chợ Hạ Long 1", sp:"Chả mực — hand-pounded squid cake", pr:"₫30,000–60,000", dur:30, leg:8,
+     d:"The squid cake is made in the market and eaten everywhere. Hand-pounded, not machine-minced, which is why it bounces when you bite it and why Hanoians drive three hours to buy it.",
+     o:"A plate of chả mực, fried, and a sticky rice parcel (xôi) to go with it. Buy a vacuum-packed kilo only if you have a fridge on board.",
+     x:"Best before 11:00. Cash. Bargaining is gentle.",
+     c:"20.9519,107.0828"},
+    {n:"Bánh cuốn chả mực", sp:"Rice rolls with squid cake", pr:"₫40,000–60,000", dur:20, leg:10,
+     d:"Hòn Gai's breakfast: steamed rice-sheet rolls, silky and almost translucent, with slices of squid cake instead of the Hanoi pork. Every block has a shop; the busy one is the good one.",
+     o:"Bánh cuốn chả mực. Dip it in the fish sauce, not the chilli, first.",
+     x:"A breakfast dish — shops sell out by late morning.",
+     c:"20.9527,107.0800"},
+    {n:"Sá sùng and ngán", sp:"The bay's odd seafood", pr:"₫150,000–400,000", dur:40, leg:0,
+     d:"Two things that only this coast eats: sá sùng, a dried sea worm worth more than its weight in prawns, and ngán, a small clam found in the Quảng Ninh mangroves. Order both once at a seafood house.",
+     o:"Ngán steamed with lemongrass, and sá sùng stir-fried or in a broth. Then a normal fish.",
+     x:"At any of the Eat list restaurants. Confirm the price per kilo or plate before the kitchen starts.",
+     c:"20.9510,107.0790"}
+  ],
+  sipNote:"Northern Vietnam drinks draught beer brewed that morning, not bottled wine. The bay's own brewery, Bia Hạ Long, supplies the bars in town; the tea is the green, bitter, cold stuff that comes free with everything.",
+  sip:[
+    {t:"local", n:"Bia hơi", w:"Any bia hơi corner in Hòn Gai", pr:"₫10,000–20,000",
+     d:"Fresh draught beer, brewed daily, delivered in plastic kegs and sold by the glass from a tap on the pavement. Light, very cold, the cheapest beer in the world. It must be drunk the day it is made, so it never leaves the region.",
+     o:"“Một cốc bia hơi” — one glass of draught beer. Toast with “một, hai, ba, dzô!”",
+     x:"Look for plastic stools and a crowd. New Year's Eve the yacht sails at 20:00, so this is an afternoon drink, not a countdown.",
+     c:"20.9519,107.0828"},
+    {t:"light", n:"Trà đá", w:"Every street stall in Vietnam", pr:"₫3,000–5,000",
+     d:"Iced green tea, weak and bitter, poured into a glass at every stall in the north. It is often free with food, and it is the drink that makes a squid cake breakfast work.",
+     o:"“Trà đá” — iced tea. It arrives without asking at most places.",
+     x:"",
+     c:"20.9527,107.0800"}
+  ],
+  buy:[
+    {n:"Squid cake to take", d:"The market vacuum-packs chả mực; it keeps two or three days chilled. Only worth it if you are going to eat it on board.", c:"20.9519,107.0828"},
+    {n:"Pearls", d:"The bay has pearl farms and the day boats stop at the showrooms. Some are genuine cultured pearls; the prices are open to discussion and the certificates are the shop's own. Buy for pleasure, not investment.", c:"20.8560,107.0800"},
+    {n:"Quảng Ninh Museum shop", d:"The museum is a black glass box on the Hòn Gai shore, the best modern building in the province, with a good small shop of local craft, coal-carving and books.", c:"20.9500,107.0925"}
+  ],
+  screen:[
+    {n:"The karst of the bay", f:"Kong: Skull Island", y:"2017", r:"Skull Island itself",
+     d:"The production shot its island across northern Vietnam, including Hạ Long Bay, Ninh Bình and Quảng Bình. The bay provides the rising limestone that the helicopters fly into. It made the tourist board very happy.",
+     q:"The arrival of the helicopter squadron through the storm wall, roughly twenty minutes into a 118-minute film, and the lagoons through the middle hour.",
+     x:"You will pass something like it every five minutes; the exact rocks are unmarked.",
+     c:"20.8800,107.0900"},
+    {n:"The bay by junk", f:"Indochine", y:"1992", r:"The Dragon's Descent",
+     d:"Catherine Deneuve's Oscar-winning film goes to the bay for its most beautiful section — Camille and Jean-Baptiste escape among the islands. The film made the bay famous in France overnight.",
+     q:"The middle of a 159-minute film, after Camille leaves the plantation.",
+     x:"",
+     c:"20.8900,107.0800"},
+    {n:"Hạ Long Bay — not quite", f:"Tomorrow Never Dies", y:"1997", r:"Carver's stealth ship",
+     d:"The script sends Bond and Wai Lin to Hạ Long Bay for the finale. Vietnam refused permission late, and the bay was played by Phang Nga Bay in Thailand. What you are looking at is what the film was pretending to be.",
+     q:"The last half hour.",
+     x:"",
+     c:""}
+  ],
+  know:[
+    "Two days here: arrival 08:00 on 30 December, sailing 20:00 on 31 December. The clock above is set for the second day. New Year's Eve itself is at sea.",
+    "The bay is a UNESCO site with a ticketed zone; entry is included in organised boats. Private boats must be licensed — book through the yacht or a known operator.",
+    "Late December is cool, damp and often misty — 15–20°C, with a fine drizzle the Vietnamese call mưa phùn. Bring a layer and expect a softer, greyer bay than the brochures.",
+    "Dong: roughly 25,000 to the US dollar. The 20,000 and 500,000 notes are both blue; check before you hand one over.",
+    "Kayaking and swimming are only allowed in certain places. Your boat will tell you where."
+  ]
+},
+{
+  id:"saigon", townKm:1.8, name:"Ho Chi Minh City", sub:"Vietnam · Monday 3 January · 09:00–21:00",
+  aboard:"20:30", ashore:"09:00", back:120,
+  dock:{t:"Probably Phú Mỹ — about two hours from the city by road",
+        d:"A yacht this size usually berths at Phú Mỹ on the Thị Vải river, 80 km out. Budget two hours each way, more in the evening rush: the walk projection below keeps two hours back for the drive. If the programme names a city berth on the Saigon river, set that aside and you have the whole day."},
+  stops:[
+    {n:"War Remnants Museum", dur:60, leg:8,
+     w:"The American war as Vietnam tells it, in three floors of photographs, many by the photographers who died taking them. It is the most visited museum in the country and the hardest to walk out of.",
+     l:"The Requiem gallery of war photographers' last pictures, and the tanks and aircraft in the yard outside.",
+     x:"Opens 07:30. The Agent Orange rooms are harrowing; there is no obligation to see them.",
+     c:"10.7795,106.6921"},
+    {n:"Independence Palace", dur:60, leg:8,
+     w:"The South Vietnamese presidential palace, rebuilt in 1966 in a sharp modernist concrete, where a North Vietnamese tank crashed through the gates on 30 April 1975. Inside, time stopped: the rooms, carpets and telephones are as they were that morning.",
+     l:"The war room and the telex machines in the basement, and a replica of tank 843 on the lawn.",
+     x:"Has historically closed for lunch, 11:00–13:00; check the board.",
+     c:"10.7770,106.6953"},
+    {n:"Notre-Dame Cathedral", dur:15, leg:2,
+     w:"Built by the French between 1863 and 1880, entirely from materials shipped from France, down to the red Toulouse brick that has never faded.",
+     l:"The Virgin statue in the square in front, which was reported to have wept in 2005.",
+     x:"Under a long restoration; the façade may be scaffolded. Look from the square.",
+     c:"10.7798,106.6990"},
+    {n:"Central Post Office", dur:20, leg:10,
+     w:"A great iron-and-glass hall of 1891, still a working post office. The two painted maps on the wall show Saigon and its telegraph lines as the colony saw them.",
+     l:"Hồ Chí Minh's portrait at the end of the hall, over the counters, where the French governors' clocks once were.",
+     x:"Send a postcard from here. It is what the building is for.",
+     c:"10.7800,106.7000"},
+    {n:"Opera House & the Hotel Continental", dur:20, leg:5,
+     w:"The Municipal Theatre of 1900 faces the Continental across Đồng Khởi — the old rue Catinat. Graham Greene lived at the Continental and set The Quiet American on its terrace.",
+     l:"The Continental's corner terrace, where Fowler drinks in the novel and the film.",
+     x:"The Rex is a block along; its rooftop was the war correspondents' bar. See Drink this here.",
+     c:"10.7766,106.7031"},
+    {n:"Nguyễn Huệ & the Café Apartments", dur:40, leg:12,
+     w:"A boulevard turned into a pedestrian mall from the People's Committee building to the river. Number 42, an old nine-storey apartment block, is now stacked floor by floor with tiny cafés and shops.",
+     l:"The French colonial Hôtel de Ville at the top of the boulevard, lit gold at dusk.",
+     x:"The lift in 42 charges a small fee; take the stairs.",
+     c:"10.7747,106.7038"},
+    {n:"Bến Thành Market", dur:45, leg:0,
+     w:"The central market of 1914, its clock tower the city's emblem. Fabric, coffee, lacquer, dried fruit and a food hall in the middle.",
+     l:"The clock tower from the south gate, and the food hall — see the food tour.",
+     x:"Prices for visitors start high. Closes about 18:00; the night market outside takes over.",
+     c:"10.7725,106.6980"}
+  ],
+  eat:[
+    {n:"Phở Hòa Pasteur", t:"Phở", d:"The famous old phở house on Pasteur Street since 1968. Southern-style: sweeter broth, a plate of herbs and bean sprouts to add yourself.", c:"10.7893,106.6892"},
+    {n:"Bánh Mì Huỳnh Hoa", t:"Bánh mì", d:"Lê Thị Riêng. The fattest bánh mì in the city, stuffed with pâté and cold cuts. Queue on the street.", c:"10.7712,106.6923"},
+    {n:"Quán Ăn Ngon", t:"Street food, seated", d:"160 Pasteur. A colonial villa with street-food stalls around its garden. Every regional dish, at tables, with a menu in English.", c:"10.7788,106.6989"},
+    {n:"Cục Gạch Quán", t:"Home cooking", d:"District 1, north of the centre. Old furniture, old recipes, the kind of Vietnamese home cooking the restaurants forgot. Book.", c:"10.7936,106.6905"}
+  ],
+  tasteNote:"Saigon eats on the pavement, at knee height, all day. The tour below is a lunch rather than a dinner, because the drive back to Phú Mỹ takes the evening.",
+  taste:[
+    {n:"Café Apartments, 42 Nguyễn Huệ", sp:"Cà phê sữa đá", pr:"₫35,000–60,000", dur:20, leg:10,
+     d:"Vietnamese robusta, dripped slowly through a tin phin into a glass of condensed milk, then poured over ice. Stronger than you think.",
+     o:"Cà phê sữa đá. If it is too sweet, cà phê đen đá — black, over ice.",
+     x:"Pick a café on an upper floor with a balcony over the boulevard.",
+     c:"10.7747,106.7038"},
+    {n:"Bến Thành Market food hall", sp:"Bún riêu, or chè", pr:"₫40,000–70,000", dur:25, leg:8,
+     d:"The food stalls in the middle of the market, stools and counters packed together. Bún riêu is crab and tomato noodle soup; chè is the sweet pudding of beans, jelly and coconut milk.",
+     o:"Bún riêu, then a chè for pudding.",
+     x:"Point, pay, sit.",
+     c:"10.7725,106.6980"},
+    {n:"Bánh Mì Huỳnh Hoa", sp:"Bánh mì", pr:"₫70,000", dur:15, leg:15,
+     d:"The one everyone argues about: an airy baguette stuffed to bursting with pâté, ham, pork floss and pickles.",
+     o:"One bánh mì, shared. It is enormous.",
+     x:"Opens mid-afternoon; if closed, any bánh mì cart will do.",
+     c:"10.7712,106.6923"},
+    {n:"Quán Ăn Ngon", sp:"Bánh xèo", pr:"₫90,000–150,000", dur:40, leg:15,
+     d:"A sizzling rice-flour crêpe filled with prawns, pork and bean sprouts, wrapped in lettuce with herbs and dipped in fish sauce. Easier to eat seated, which is why it is here.",
+     o:"Bánh xèo, and gỏi cuốn — fresh summer rolls.",
+     x:"",
+     c:"10.7788,106.6989"},
+    {n:"Phở Hòa Pasteur", sp:"Phở bò", pr:"₫90,000–120,000", dur:25, leg:0,
+     d:"End with the bowl the city is named for, sweeter and more herbed than in the north.",
+     o:"Phở tái — rare beef, cooked in the broth at the table.",
+     x:"",
+     c:"10.7893,106.6892"}
+  ],
+  sipNote:"Saigon drinks beer over ice and cane juice in the heat. The famous rooftop is the one the foreign press drank on through the war.",
+  sip:[
+    {t:"local", n:"Saigon Special", w:"Rex Hotel rooftop bar", pr:"₫80,000–150,000",
+     d:"The city's beer, poured over ice in the Saigon way, on the rooftop where correspondents drank after the daily military briefings — the 'Five O'Clock Follies'.",
+     o:"“Một Saigon Special, với đá” — with ice.",
+     x:"Leave before 18:30 for Phú Mỹ.",
+     c:"10.7760,106.7010"},
+    {t:"light", n:"Nước mía", w:"Any street cart", pr:"₫15,000–25,000",
+     d:"Fresh sugarcane juice, crushed through rollers in front of you, with a squeeze of kumquat. Cold, green-gold and less sweet than it looks.",
+     o:"“Nước mía, có tắc” — with kumquat.",
+     x:"",
+     c:"10.7725,106.6980"}
+  ],
+  buy:[
+    {n:"Lacquerware", d:"Saigon was the centre of sơn mài, lacquer painting built up in dozens of layers and sanded back. Shops on Đồng Khởi sell the good work; the market sells the rest.", c:"10.7760,106.7035"},
+    {n:"Coffee", d:"Robusta beans and a tin phin cost almost nothing and travel well. Skip 'weasel' coffee: most of it is not what it says.", c:"10.7725,106.6980"},
+    {n:"Áo dài — not in one day", d:"Bến Thành fabric stalls take measurements, but a proper áo dài needs a fitting. It works only if you order from home first.", c:"10.7725,106.6980"}
+  ],
+  screen:[
+    {n:"Hotel Continental", f:"The Quiet American", y:"2002", r:"Fowler's Saigon",
+     d:"Michael Caine's Fowler lives and drinks here. The film was shot on location in Saigon and Hội An, and the square in front of the theatre is where the bomb goes off.",
+     q:"The bombing in the square, around two-thirds through a 101-minute film.",
+     x:"Stop 5 on the walk.",
+     c:"10.7766,106.7026"},
+    {n:"Saigon — not here", f:"Good Morning, Vietnam", y:"1987", r:"Adrian Cronauer's Saigon",
+     d:"Robin Williams' Saigon was Bangkok. Vietnam was closed to American crews; Thailand stood in.",
+     q:"The whole film.",
+     x:"",
+     c:""},
+    {n:"Saigon — not here", f:"Apocalypse Now", y:"1979", r:"'Saigon… shit'",
+     d:"Willard's hotel room was shot in the Philippines. The ceiling fan was never in Saigon.",
+     q:"The first ten minutes.",
+     x:"",
+     c:""}
+  ],
+  know:[
+    "The yacht sails 21:00; all aboard is normally 20:30. Leave the city by 18:30 for Phú Mỹ.",
+    "Cross the road by walking steadily and predictably. The motorbikes flow around you; stopping or running is what causes accidents.",
+    "Grab (the app) is the easiest taxi. The white Vinasun and Mai Linh cars are honest metered taxis.",
+    "Dong: about 25,000 to the US dollar. The 20,000 and 500,000 notes are both blue.",
+    "Early January is dry season: 30–33°C, humid, sunny."
+  ]
+},
+{
+  id:"kohkood", townKm:14, name:"Koh Kood", sub:"Thailand · Wednesday 5 January · 09:00–17:00",
+  aboard:"16:30", ashore:"09:15", back:30,
+  dock:{t:"At anchor — the marina day",
+        d:"No pier big enough: the yacht anchors off and tenders to a beach or jetty. This is the day the marina opens off the stern. The island is 25 km long with one road; distances below are by songthaew (the pick-up taxi) or scooter."},
+  stops:[
+    {n:"Khlong Chao", dur:30, leg:10, by:"by car",
+     w:"The island's village on a mangrove creek, with stilt houses, a few shops and the start of the road to the waterfall.",
+     l:"The mangroves along the creek, and the fishing boats tied under the bridge.",
+     x:"",
+     c:"11.6310,102.5420"},
+    {n:"Khlong Chao waterfall", dur:60, leg:25, by:"by car",
+     w:"A short jungle walk leads to a broad cascade over rock ledges into a deep pool. Water in January is lower than after the rains but cool enough to swim.",
+     l:"The fish in the pool nibbling your feet.",
+     x:"Twenty minutes on foot from the road. Slippery rock; sandals, not flip-flops.",
+     c:"11.6420,102.5660"},
+    {n:"Makka Pai tree", dur:30, leg:20, by:"by car",
+     w:"A giant tetrameles tree in the forest, hundreds of years old, its buttress roots taller than you.",
+     l:"The roots — stand inside them.",
+     x:"",
+     c:"11.6700,102.5630"},
+    {n:"Ao Salad fishing village", dur:60, leg:30, by:"by car",
+     w:"A fishing village on stilts on the north-east coast, more working than picturesque. The seafood restaurants over the water are the best on the island.",
+     l:"The squid drying on racks.",
+     x:"Lunch here. Seafood by weight.",
+     c:"11.7050,102.5960"},
+    {n:"Ao Tapao beach", dur:90, leg:0,
+     w:"A long white beach on the west coast with water as clear as the brochures. The island's best swim if you are not doing it off the yacht.",
+     l:"The water: it shades from turquoise to navy with almost no sand in it at all.",
+     x:"Leave half an hour for the drive back to the tender landing.",
+     c:"11.6020,102.5430"}
+  ],
+  eat:[
+    {n:"Ao Salad seafood", t:"Seafood", d:"The stilt restaurants over the water at Ao Salad. Pick the fish from the tank, name the sauce, eat with the fishing boats knocking against the piles below you.", c:"11.7050,102.5960"},
+    {n:"Soneva Kiri", t:"Destination", d:"The island's most famous resort, reached by its own airstrip. Its treepod dining — a table hoisted into the canopy and served by a waiter on a zip-line — needs booking well in advance and is the most extravagant lunch in Thailand.", c:"11.6880,102.5450"},
+    {n:"Khlong Chao beach cafés", t:"Casual", d:"Where the creek meets the sea, a few wooden cafés doing Thai curries, fried rice and fruit shakes. Nothing remarkable and exactly right on a beach day.", c:"11.6300,102.5390"}
+  ],
+  tasteNote:"Koh Kood is an island of fishing villages and quiet resorts, not restaurants, and it is best treated as a swim with a lunch attached. The one meal worth arranging the day around is seafood over the water at Ao Salad.",
+  taste:[
+    {n:"A roadside fruit stall", sp:"Rambutan, mangosteen, pineapple", pr:"฿40–100", dur:10, leg:30,
+     d:"The island grows fruit in the gardens behind every house, and stalls along the one road sell whatever is ripe, cut and bagged with a stick to eat it with. January is pineapple and papaya season; the rambutans are grown on the island.",
+     o:"Whatever is cut and on ice. Ask for “prik gleua” — the chilli-salt-sugar dip — on the side.",
+     x:"There is no fixed stall; the driver will stop at one.",
+     c:"11.6420,102.5600"},
+    {n:"Ao Salad", sp:"Crab and squid over the water", pr:"฿300–900", dur:60, leg:0,
+     d:"A fishing village on the north-east coast where the restaurants stand on stilts over the jetty and the menu is what came in on the boats that morning: blue crab, squid, rock lobster, white snapper.",
+     o:"Pla muk yang — grilled squid with a green chilli and lime sauce — and poo neung, steamed blue crab. Steamed fish with lime and garlic if there are more of you.",
+     x:"Seafood is priced by weight. Ask the price per kilo before they weigh it.",
+     c:"11.7050,102.5960"}
+  ],
+  sipNote:"A beach day, so the drinks are the ones a Thai would order sitting on the sand: the country's own rum, which it insists is whisky, and lime soda.",
+  sip:[
+    {t:"local", n:"Sang Som and soda", w:"Any beach bar", pr:"฿100–200",
+     d:"Thailand's best-selling spirit, distilled from cane molasses and aged in oak — a rum, though Thais call it lao, whisky. Poured with soda and a great deal of ice, sometimes with a squeeze of lime. It is what is in the plastic buckets on the party islands, and it is better sipped than bucketed.",
+     o:"“Sang Som soda, manao” — with soda and lime.",
+     x:"On board the yacht is serving a better bottle, so this is the beach-bar drink rather than the evening one.",
+     c:"11.6020,102.5430"},
+    {t:"light", n:"Soda manao", w:"Any beach bar", pr:"฿50–80",
+     d:"Fresh lime squeezed into soda with a pinch of salt and a spoon of sugar syrup. Salty, sour and sweet at once, which is the Thai idea of refreshment, and it is the best thing to drink at midday on a white beach.",
+     o:"“Soda manao” — and “waan noi” if you want less sugar.",
+     x:"",
+     c:"11.6020,102.5430"}
+  ],
+  buyNote:"Nothing to buy on Koh Kood that is not made better or sold cheaper in Bangkok. Keep the baht for songthaews and lunch.",
+  buy:[],
+  screen:[
+    {n:"Nothing filmed here", f:"", y:"", r:"Unfilmed, and better for it",
+     d:"No film of note has used Koh Kood. It is one of the last large Thai islands without a production, an airport for commercial jets, or a strip of bars — which is the reason to come.",
+     q:"",
+     x:"",
+     c:""}
+  ],
+  know:[
+    "The yacht sails 17:00; all aboard is normally 16:30, and the last tender goes before that. Watch the tender times, not the clock.",
+    "Very few ATMs on the island, and not reliable. Bring baht from the yacht.",
+    "Songthaews — pick-up trucks with benches — are the taxis. Unmetered; agree the fare and the waiting time before you set off.",
+    "Box jellyfish are occasionally reported in the Gulf of Thailand. Swim where the resorts swim, and note the vinegar stations on the beaches.",
+    "Early January is the dry season: 30°C, a calm sea and the clearest water of the year. Reef-safe sunscreen only near the coral."
+  ]
+},
+{
+  id:"samui", townKm:16, name:"Koh Samui", sub:"Thailand · Thursday 6 January · 08:00–17:00",
+  aboard:"16:30", ashore:"08:30", back:30,
+  dock:{t:"At anchor — tender ashore, usually to Nathon",
+        d:"The yacht anchors off and tenders in; Nathon on the west coast is the usual landing, and the daily programme names the pier. The sights are spread round a ring road about 50 km long, so this is a day with a driver, not a walk. Agree a half-day or full-day price at the pier. The projection keeps half an hour for the drive back."},
+  stops:[
+    {n:"Na Muang waterfall", dur:40, leg:25, by:"by car",
+     w:"A twenty-metre fall over purple-grey rock into a swimming pool, a short walk from the car park. The cooler first stop of the morning.",
+     l:"The colour of the rock, stained by minerals.",
+     x:"Na Muang 1 is the easy one; Na Muang 2 is a stiff 30-minute climb.",
+     c:"9.4750,99.9990"},
+    {n:"Wat Khunaram", dur:20, leg:10, by:"by car",
+     w:"The temple of Luang Pho Daeng, a monk who died in meditation in 1973 and whose body did not decay. He sits upright in a glass case, wearing sunglasses — added when his eyes sank.",
+     l:"The sunglasses.",
+     x:"Shoulders and knees covered.",
+     c:"9.4480,100.0350"},
+    {n:"Hin Ta and Hin Yai", dur:25, leg:30, by:"by car",
+     w:"'Grandfather and Grandmother' rocks, at the south end of Lamai beach, shaped by the sea into forms so anatomical that Thais giggle and Westerners blush.",
+     l:"Hin Ta, the 'grandfather', which is exactly what you think it is.",
+     x:"Stalls on the path sell kalamae, the sticky coconut toffee of the island.",
+     c:"9.4460,100.0520"},
+    {n:"Wat Plai Laem", dur:30, leg:5, by:"by car",
+     w:"A modern temple on a lake, with an eighteen-armed white statue of Guanyin and a fat laughing Buddha. Colourful, eclectic and loved.",
+     l:"The catfish in the lake — buy fish food and watch.",
+     x:"",
+     c:"9.5750,100.0770"},
+    {n:"Big Buddha (Wat Phra Yai)", dur:30, leg:15, by:"by car",
+     w:"A 12-metre golden Buddha on a small island joined by a causeway, visible from planes landing at the airport next door.",
+     l:"The view back over the bay from the platform.",
+     x:"Shoes off on the steps. Dress modestly.",
+     c:"9.5716,100.0600"},
+    {n:"Fisherman's Village, Bophut", dur:75, leg:0,
+     w:"A street of old Chinese wooden shophouses on the beach, now restaurants, cafés and boutiques. The prettiest place on the island to sit.",
+     l:"The Chinese shophouse fronts, the only old buildings on Samui.",
+     x:"The walking-street market is Friday night only. From here it is half an hour back to Nathon.",
+     c:"9.5600,100.0270"}
+  ],
+  eat:[
+    {n:"Coco Tam's", t:"Beach bar", d:"Fisherman's Village. Beanbags on the sand, pizza and cocktails. More a place than a restaurant, and the right one for the last hour.", c:"9.5603,100.0263"},
+    {n:"Fisherman's Village street", t:"Thai", d:"The cafés along the old shophouse street do honest Thai lunches — green curry, som tam, grilled fish — with the water behind them.", c:"9.5597,100.0280"},
+    {n:"The Jungle Club", t:"View", d:"Above Chaweng. A long steep drive for the best view on the island. Thai and Western food.", c:"9.5150,100.0580"},
+    {n:"Hua Thanon market", t:"Southern Thai", d:"The Muslim fishing village south of Lamai: curries and grilled fish in the morning market.", c:"9.4270,100.0500"}
+  ],
+  tasteNote:"Samui was a coconut island for centuries, supplying Bangkok with two million coconuts a month, before it became a beach resort. The food is southern Thai: hotter, with more turmeric and fish.",
+  taste:[
+    {n:"Hua Thanon market", sp:"Khao yam — southern rice salad", pr:"฿50–80", dur:30, leg:20,
+     d:"A Muslim fishing village south of Lamai, one of the oldest communities on the island, with a morning market for the fleet. Khao yam is the southern breakfast: rice tossed with shredded herbs, toasted coconut, pomelo, dried shrimp and budu, a sauce of fermented fish.",
+     o:"Khao yam, and a curry puff — karipap — from the next stall.",
+     x:"Morning only; the market is done by about 10:00. It is on the way from Na Muang to Wat Khunaram if you start early.",
+     c:"9.4270,100.0500"},
+    {n:"Lamai kalamae stalls", sp:"Kalamae", pr:"฿50–100", dur:15, leg:30,
+     d:"Kalamae, the island's toffee: coconut milk, palm sugar and glutinous rice flour stirred for hours in giant woks over a wood fire until it goes dark and chewy, then wrapped in twists of dried palm leaf. The stalls at Hin Ta and Hin Yai make it in front of you.",
+     o:"A small pack, and a fresh coconut to wash it down.",
+     x:"It is sold everywhere on the island, but this is where you see it being stirred.",
+     c:"9.4460,100.0520"},
+    {n:"Fisherman's Village", sp:"Mango sticky rice", pr:"฿100–150", dur:20, leg:0,
+     d:"Sweet sticky rice soaked in salted coconut cream, with a sliced mango and a scatter of crisp mung beans. Early January is ahead of the main Thai mango season, so the fruit may come from the north or from abroad — still good.",
+     o:"Khao niao mamuang, one plate between two.",
+     x:"Any of the cafés on the Fisherman's Village street.",
+     c:"9.5600,100.0270"}
+  ],
+  sipNote:"Samui was a coconut plantation before it was anything else, and still ships them to the mainland by the boatload. On this island the local drink and the light one come off the same tree.",
+  sip:[
+    {t:"local", n:"Nam maprao", w:"Any roadside stall", pr:"฿60–100",
+     d:"A young green coconut, the top taken off in three strokes of a machete, a straw pushed in. Samui's coconuts are the sweetest in Thailand — the sandy soil and salt air, say the growers — and they are sold at every bend of the ring road, chilled in ice chests.",
+     o:"“Maprao onn” — young coconut. When it is empty, hand it back and they will split it so you can scrape out the soft flesh.",
+     x:"Some growers on Samui still train pig-tailed macaques to pick. Stalls advertising monkey shows are the ones to walk past.",
+     c:"9.5600,100.0270"},
+    {t:"light", n:"Coconut shake", w:"Coco Tam's, Bophut", pr:"฿120–180",
+     d:"Coconut water and soft flesh blended with ice until it is thick enough to need a spoon. On a beanbag on Bophut beach, it is the right last hour before the tender.",
+     o:"A coconut shake. If the day is done, add a shot of Sang Som — they will know.",
+     x:"Half an hour back to Nathon from here.",
+     c:"9.5603,100.0263"}
+  ],
+  buy:[
+    {n:"Coconut oil", d:"Cold-pressed virgin coconut oil made on the island, and the soaps and balms made from it. The honest ones name the farm on the label. Otherwise Samui sells what Bangkok sells, at island prices.", c:"9.5600,100.0270"}
+  ],
+  screen:[
+    {n:"Four Seasons Resort Koh Samui", f:"The White Lotus", y:"2025", r:"The hotel",
+     d:"Season three of The White Lotus was set at a fictional wellness resort and shot largely at the Four Seasons on the north-west tip of Samui — the hillside villas, the beach, the restaurant.",
+     q:"All eight episodes; the resort is the season's main set.",
+     x:"About 30 minutes north of Nathon. Non-guests can book a meal — ring ahead.",
+     c:"9.5870,99.9720"},
+    {n:"Ang Thong — not here", f:"The Beach", y:"2000", r:"The island",
+     d:"In Alex Garland's novel the secret beach is in the Ang Thong marine park, the archipelago off Samui's west coast. The film moved it to Maya Bay on Phi Phi Leh, on the other side of the peninsula. Samui has the book's beach, and none of the film's.",
+     q:"",
+     x:"Ang Thong is a full-day boat trip from Samui — not possible on this call.",
+     c:""}
+  ],
+  know:[
+    "The yacht sails 17:00; all aboard normally 16:30. The last tender will be earlier.",
+    "Taxis are unmetered and expensive. Agree the price before getting in.",
+    "Temples: cover shoulders and knees, take shoes off.",
+    "January is the start of the dry season, but showers remain possible.",
+    "The ring road is busy with scooters. Hire a driver rather than a bike."
+  ]
+},
+{
+  id:"bangkok", townKm:3.5, name:"Bangkok", sub:"Thailand · Laem Chabang · overnight 7 January 09:00 – 8 January 18:00",
+  aboard:"17:30", ashore:"09:00", back:150,
+  dock:{t:"Laem Chabang — about two hours from Bangkok by road",
+        d:"Laem Chabang is the container port for Bangkok, 120 km south-east of the city. Allow two hours each way and two and a half in the evening. With an overnight, the right move is to stay in the city — a riverside hotel on the night of the 7th — and do the old city the first morning and Chinatown that night. The clock above is set for the second day; the projection keeps two and a half hours for the drive back."},
+  stops:[
+    {n:"The Grand Palace & Wat Phra Kaew", dur:120, leg:10,
+     w:"The royal palace of 1782 and, inside its walls, the temple of the Emerald Buddha — a small jade figure, the most sacred object in Thailand, whose robes the King changes with the seasons. Gold, mirror-glass and porcelain on every surface.",
+     l:"The Ramakien murals running round the cloister, 178 panels telling the Thai Ramayana, and the giant demon guardians at the gates.",
+     x:"Opens 08:30, last entry 15:30. Go first. Strict dress code: covered shoulders, long trousers or skirts, no sandals without heels — they lend sarongs at the gate. Ignore anyone outside who says it is closed today: it is a scam.",
+     c:"13.7500,100.4913"},
+    {n:"Wat Pho", dur:60, leg:5,
+     w:"The Reclining Buddha, 46 metres of gold leaf over brick, lying on his side to enter nirvana. The temple was also Thailand's first university and still teaches traditional massage.",
+     l:"The soles of the feet — mother-of-pearl inlay of the 108 auspicious signs — and the 108 bronze bowls along the wall, into which you drop a coin each for luck.",
+     x:"A massage in the school pavilion is 30 minutes well spent.",
+     c:"13.7465,100.4930"},
+    {n:"Wat Arun, across the river", dur:45, leg:20, by:"by boat",
+     w:"The Temple of Dawn, its central prang faced in broken Chinese porcelain from ships' ballast. Cross on the three-minute ferry from Tha Tien pier.",
+     l:"The porcelain flowers up close, and the climb to the first terrace.",
+     x:"From here take the Chao Phraya Express downriver to Ratchawong or Memorial Bridge.",
+     c:"13.7437,100.4888"},
+    {n:"Pak Khlong Talat", dur:25, leg:15,
+     w:"The flower market, 24 hours a day: garlands of marigold and jasmine threaded by hand for temple offerings, by the tonne.",
+     l:"The garland threaders at work in the back lanes.",
+     x:"Busiest at night, when the wholesale trade arrives.",
+     c:"13.7428,100.4970"},
+    {n:"Yaowarat — Chinatown", dur:60, leg:20, by:"by boat",
+     w:"Bangkok's Chinatown, the gold shops and the neon along Yaowarat Road, and the narrow Sampeng Lane behind. Dense by day; by night it is the best street food in the city — see the food tour.",
+     l:"Wat Traimit and its Golden Buddha — five and a half tonnes of solid gold, discovered in 1955 when the plaster around it cracked.",
+     x:"Come back after dark for the food.",
+     c:"13.7400,100.5090"},
+    {n:"Mandarin Oriental riverside", dur:60, leg:10,
+     w:"The Oriental of 1876 on the river, where Conrad, Maugham and Coward stayed. The Authors' Lounge in the original wing serves afternoon tea under white wicker.",
+     l:"The river from the terrace at dusk, the longtails and rice barges passing.",
+     x:"Smart casual.",
+     c:"13.7237,100.5143"},
+    {n:"Sky Bar, Lebua State Tower", dur:45, leg:0,
+     w:"The domed tower and the open-air bar on the 63rd floor, over the river bend. The view down at the city is extraordinary; the drinks are what you'd expect at that height.",
+     l:"The river curving under the lights.",
+     x:"Dress code, and a minimum spend. The night of the 7th, not the 8th.",
+     c:"13.7216,100.5170"}
+  ],
+  eat:[
+    {n:"Jay Fai", t:"Street food, Michelin star", d:"Mahachai Road. A woman in ski goggles cooking crab omelettes over charcoal. Queue for hours, or book.", c:"13.7525,100.5046"},
+    {n:"Thip Samai", t:"Pad thai", d:"Next door to Jay Fai. Pad thai wrapped in an egg. The famous one.", c:"13.7527,100.5047"},
+    {n:"Err", t:"Rustic Thai", d:"By Wat Pho, from the team behind Bo.Lan. Thai bar food and drinking snacks.", c:"13.7460,100.4920"},
+    {n:"Krua Apsorn", t:"Thai home cooking", d:"Dinso Road. The crab curry with lotus stems.", c:"13.7560,100.5010"}
+  ],
+  tasteNote:"Yaowarat after dark is the best street-food strip in Asia, and the overnight is what lets you have it: the stalls set up as the gold shops close, around 18:00, and run until midnight. Everything below sits within about 500 metres of Yaowarat Road, on the night of the 7th. Go hungry and share every plate.",
+  taste:[
+    {n:"Nai Ek Roll Noodles", sp:"Kuay jab nam sai", pr:"฿70–100", dur:20, leg:3,
+     d:"A shophouse on Yaowarat Soi 9 that has done one soup for three generations: rolled rice noodles, curled like tubes, in a clear broth sharp with white pepper, topped with crackling pork belly.",
+     o:"Kuay jab nam sai with moo krob — the crispy pork. One bowl between two, there is a lot to come.",
+     x:"Air-conditioned inside, which on a hot night is a start in itself.",
+     c:"13.7409,100.5082"},
+    {n:"Nai Mong Hoi Thod", sp:"Oyster omelette", pr:"฿100–150", dur:20, leg:5,
+     d:"A Michelin Bib Gourmand for a single griddle. Oysters, batter and egg fried hard in lard until the edges shatter, served on a bed of bean sprouts with a sweet chilli sauce.",
+     o:"Hoi thod, crispy style — or or suan, the softer, gooier one, if you like your oysters closer to raw.",
+     x:"Just off the main road on Phlap Phla Chai. Closes around 22:00.",
+     c:"13.7430,100.5105"},
+    {n:"T&K Seafood", sp:"Grilled river prawns", pr:"฿300–1,000", dur:40, leg:3,
+     d:"Two seafood houses glaring at each other across the corner of Yaowarat and Phadungdao, their tables spilling into the street: T&K in green shirts, Lek & Rut in red. The rivalry is the point. The food is the same, and both are good.",
+     o:"Goong pao — grilled giant river prawns, split, with their orange heads — plus a crab curry or steamed sea bass with lime and chilli.",
+     x:"Prices are per kilo on the board. Pick your side and do not look back.",
+     c:"13.7400,100.5102"},
+    {n:"Pa Tong Go Savoey", sp:"Patongko and pandan custard", pr:"฿40–60", dur:15, leg:0,
+     d:"The pudding of Chinatown: patongko, the Chinese twin-stick of fried dough, snipped into pieces and dipped in a bowl of warm green pandan custard.",
+     o:"A plate of patongko with the pandan custard, sangkhaya bai toey. Eat it while it is hot.",
+     x:"Evening only. Then walk it off down Yaowarat under the neon.",
+     c:"13.7405,100.5095"}
+  ],
+  sipNote:"Bangkok does not have a signature cocktail, it has a signature bottle: the herbal spirit drunk by the old men of the provinces, now poured by young bartenders in Chinatown. The light one is the orange tea every Thai drinks with lunch.",
+  sip:[
+    {t:"local", n:"Ya dong", w:"Tep Bar, Soi Nana, Chinatown", pr:"฿150–350",
+     d:"Rice whisky or lao khao steeped with roots, bark and herbs for weeks, sold in shot glasses from jars on roadside carts. Supposedly medicinal, certainly strong. Tep Bar serves it in sets of three with fruit and live Thai folk music, in an old shophouse at the edge of Chinatown.",
+     o:"The ya dong tasting set, with the pickled fruit that comes with it.",
+     x:"Soi Nana in Chinatown, not the other Nana on Sukhumvit. A few minutes on foot from the food tour.",
+     c:"13.7403,100.5145"},
+    {t:"light", n:"Cha yen", w:"ChaTraMue, Yaowarat", pr:"฿50–70",
+     d:"Thai iced tea, the bright orange of it coming from the tea blend, sweetened with condensed milk and poured over a great deal of ice. ChaTraMue — Number One brand — has been blending the tea since 1945 and runs its own counters.",
+     o:"“Cha yen” — or “cha manao” for the lime version without milk.",
+     x:"",
+     c:"13.7408,100.5090"}
+  ],
+  buy:[
+    {n:"Jim Thompson silk", d:"The American who revived Thai silk after the war and vanished in the Malaysian jungle in 1967. His house of teak buildings on a canal is a museum and a shop; the silk sold there is the real thing, and ties, scarves and cushion covers pack flat.", c:"13.7493,100.5282"},
+    {n:"Benjarong porcelain", d:"Five-colour enamelled porcelain once made only for the palace. Good pieces are hand-painted, with gold leaf that rises slightly to the touch; printed transfers are flat.", c:"13.7440,100.5010"},
+    {n:"Sampeng Lane", d:"Chinatown's wholesale lane: beads, ribbons, toys, fabric, hair clips, everything by the dozen. Not a shopping stop so much as a spectacle to walk through.", c:"13.7440,100.5010"}
+  ],
+  screen:[
+    {n:"Sky Bar, Lebua", f:"The Hangover Part II", y:"2011", r:"The rooftop",
+     d:"The Wolfpack's rooftop scene with Paul Giamatti, shot at the Sky Bar. The bar still sells a 'Hangovertini' in its honour.",
+     q:"The last half hour of a 102-minute film.",
+     x:"Stop 7 on the walk.",
+     c:"13.7216,100.5170"},
+    {n:"Khao San Road", f:"The Beach", y:"2000", r:"The opening",
+     d:"Leonardo DiCaprio arrives in Bangkok on the backpackers' street and is handed a map to a secret beach. The street is noisier and neater now.",
+     q:"The first ten minutes.",
+     x:"North of the Grand Palace; a short taxi.",
+     c:"13.7590,100.4974"},
+    {n:"Chinatown", f:"In the Mood for Love", y:"2000", r:"1960s Hong Kong",
+     d:"Wong Kar-wai could not find 1960s Hong Kong in Hong Kong, so he shot much of it in Bangkok's old shophouse streets. The lanes around Yaowarat stood in.",
+     q:"Throughout.",
+     x:"",
+     c:"13.7400,100.5090"},
+    {n:"Chao Phraya", f:"The Man with the Golden Gun", y:"1974", r:"The klong chase",
+     d:"Roger Moore's long-tail boat chase through the Thonburi canals, across the river from the Grand Palace.",
+     q:"About halfway through the 125-minute film.",
+     x:"A long-tail canal tour from Tha Chang pier covers the same waters.",
+     c:"13.7520,100.4880"}
+  ],
+  know:[
+    "Overnight: arrival 09:00 on 7 January, sailing 18:00 on 8 January. The clock above is set for the second day. Allow two and a half hours from central Bangkok to Laem Chabang in the afternoon.",
+    "The river is the fastest way through the old city. The Chao Phraya Express boats are cheap; the orange flag stops everywhere.",
+    "The BTS Skytrain and MRT are air-conditioned and easy. Grab works everywhere.",
+    "Early January is the cool season: 25–32°C, dry, the best weather of the year.",
+    "Anyone who approaches you near a temple to say it is closed is running a scam that ends in a gem shop."
+  ]
+},
+{
+  id:"singapore", townKm:2.5, name:"Singapore", sub:"Disembark Tuesday 11 January · alongside from 07:00",
+  aboard:"19:00", ashore:"09:00", tideLabel:"Leave for Changi in", aboardLabel:"Leave by",
+  dock:{t:"Disembarkation — Marina Bay Cruise Centre, most likely",
+        d:"The yacht is alongside from 07:00 and you are ashore for good. The disembarkation letter names the terminal: Marina Bay puts Gardens by the Bay 10 minutes away by taxi; HarbourFront is 15 minutes from the centre. Send the bags ahead to the hotel or the airport and set the second clock above to when you must leave for Changi."},
+  stops:[
+    {n:"Gardens by the Bay", dur:75, leg:15,
+     w:"Supertrees — steel sculptures up to 50 metres high, clad in living plants — and two glass conservatories, the Flower Dome and the Cloud Forest, which houses a 35-metre indoor mountain wrapped in orchids and a waterfall.",
+     l:"The Cloud Forest's walkway, circling the mountain from the top down, and the view of the Supertrees from the OCBC Skyway above them.",
+     x:"The Supertree Grove is free; the conservatories are ticketed. Morning is coolest inside and least crowded.",
+     c:"1.2816,103.8636"},
+    {n:"Helix Bridge & Marina Bay", dur:15, leg:15,
+     w:"A footbridge of stainless steel curved into a double helix, crossing from Marina Bay Sands to the city. The whole bay is reclaimed land — none of this was here in 1980.",
+     l:"Marina Bay Sands behind you, the three towers carrying a ship-shaped park 200 metres up.",
+     x:"Walk the bay promenade on the city side, then cut up past the Esplanade — the concert hall that Singaporeans call the durian.",
+     c:"1.2877,103.8601"},
+    {n:"Raffles Hotel", dur:45, leg:15,
+     w:"The white colonial hotel of 1887, restored in 2019. Kipling, Maugham and Conrad drank here, and the Long Bar invented the Singapore Sling.",
+     l:"The cast-iron fountain in the Palm Garden, and the peanut shells on the Long Bar floor.",
+     x:"The lobby is for guests; the arcade, the courtyard and the bar are open to all.",
+     c:"1.2948,103.8545"},
+    {n:"Asian Civilisations Museum & Empress Place", dur:45, leg:5,
+     w:"The best museum in Singapore, on the river where Raffles landed in 1819. Its prize is the Tang Shipwreck: 60,000 pieces of 9th-century Chinese ceramics from a dhow wrecked off Indonesia.",
+     l:"The Tang Shipwreck gallery, and the bronze Raffles statue at the landing site outside.",
+     x:"Open daily from 10:00.",
+     c:"1.2875,103.8514"},
+    {n:"Merlion Park", dur:15, leg:20,
+     w:"The Merlion, half fish, half lion, spouting into the bay since 1972. Invented by the tourist board and now the national symbol.",
+     l:"The skyline behind Marina Bay Sands, from the lion's side.",
+     x:"From here it is a 20-minute walk to Chinatown, or two stops on the MRT from Raffles Place.",
+     c:"1.2868,103.8545"},
+    {n:"Buddha Tooth Relic Temple", dur:40, leg:3,
+     w:"A Tang-style temple of 2007 in Chinatown built to house what is said to be a tooth of the Buddha, shown in a gold stupa on the fourth floor.",
+     l:"The rooftop garden, with its prayer wheel.",
+     x:"Shoulders and knees covered; sarongs at the door.",
+     c:"1.2816,103.8443"},
+    {n:"Maxwell Food Centre", dur:40, leg:0,
+     w:"The hawker centre of Chinatown, where the Hainanese chicken rice made Anthony Bourdain and Gordon Ramsay queue. UNESCO listed Singapore's hawker culture in 2020.",
+     l:"Stall 10, Tian Tian — the chicken rice — and its queue.",
+     x:"Finish here; the airport is 25 minutes by taxi.",
+     c:"1.2803,103.8448"}
+  ],
+  eat:[
+    {n:"Tian Tian Hainanese Chicken Rice", t:"Hawker", d:"Maxwell Food Centre, stall 10. Poached chicken on rice cooked in the stock. The queue moves.", c:"1.2803,103.8447"},
+    {n:"Lau Pa Sat", t:"Hawker", d:"A Victorian cast-iron market hall. After 19:00 Boon Tat Street closes to traffic and becomes the satay street.", c:"1.2807,103.8504"},
+    {n:"Jumbo Seafood, Riverside Point", t:"Chilli crab", d:"The chilli crab that tourists travel for. Order mantou buns to mop the sauce.", c:"1.2896,103.8458"},
+    {n:"Candlenut", t:"Peranakan", d:"Dempsey Hill. The world's first Michelin-starred Peranakan restaurant. Book. Off the walk.", c:"1.3048,103.8102"},
+    {n:"Newton Food Centre", t:"Hawker", d:"Where the hawker scene in Crazy Rich Asians was shot. Evenings, for oyster omelette and satay.", c:"1.3120,103.8394"}
+  ],
+  tasteNote:"Singapore's hawker centres are the reason to have lunch here and not in a restaurant: every dish of Malay, Chinese, Indian and Peranakan origin, at prices that barely move, under one roof. This is a Chinatown breakfast-and-lunch crawl, all on foot.",
+  taste:[
+    {n:"Ya Kun Kaya Toast, Far East Square", sp:"Kaya toast and soft-boiled eggs", pr:"S$6–8", dur:20, leg:5,
+     d:"The Singapore breakfast since 1944: crisp toast with kaya — coconut and pandan jam — and a slab of cold butter, two soft eggs to break into a saucer, dark soy and white pepper.",
+     o:"The kaya toast set, with kopi — coffee with condensed milk — or teh, the tea version.",
+     x:"Far East Square is on the edge of Chinatown; it is the start of the crawl.",
+     c:"1.2830,103.8480"},
+    {n:"Amoy Street Food Centre", sp:"Laksa, or char kway teow", pr:"S$5–8", dur:25, leg:8,
+     d:"The office workers' hawker centre, less known than Maxwell and no less good.",
+     o:"Laksa — noodles in curry-coconut broth — or char kway teow, flat noodles fried in lard with cockles.",
+     x:"Weekday lunch hour is 12:00–13:30; go before.",
+     c:"1.2795,103.8465"},
+    {n:"Maxwell Food Centre", sp:"Hainanese chicken rice", pr:"S$5–8", dur:25, leg:5,
+     d:"The national dish, at its most famous address: poached chicken, silky and barely set, on rice cooked in the stock with ginger and pandan. It sounds plain and it is not.",
+     o:"Chicken rice, small, with the chilli and the minced ginger. Share it; there is another stop.",
+     x:"Tian Tian is stall 10. If the queue is mad, Ah Tai at stall 7 was started by its former chef.",
+     c:"1.2803,103.8447"},
+    {n:"Chinatown Complex Food Centre", sp:"Anything", pr:"S$4–8", dur:25, leg:0,
+     d:"The biggest hawker centre in Singapore, upstairs from a wet market, with more than 200 stalls. Liao Fan's soya sauce chicken got the first Michelin star for a hawker stall here.",
+     o:"Something you have never heard of. Failing that, soya sauce chicken on rice.",
+     x:"Second floor. Stall numbers are all you need; hours vary stall by stall.",
+     c:"1.2825,103.8430"}
+  ],
+  sipNote:"Singapore has one cocktail the world knows, and it came from the Raffles. The long cold drink, on the other hand, comes from the stall at the end of every hawker row, and costs a twentieth as much.",
+  sip:[
+    {t:"local", n:"Singapore Sling", w:"Long Bar, Raffles Hotel", pr:"S$40",
+     d:"Invented by Ngiam Tong Boon at the Raffles around 1915: gin, cherry liqueur, Bénédictine, Cointreau, pineapple, lime, grenadine and bitters. Pink, sweet, and made for women who could not be seen drinking gin in public.",
+     o:"One Singapore Sling. Throw the peanut shells on the floor.",
+     x:"The Long Bar is on the second floor of the arcade. Expensive, touristy, and still worth doing once — then go and have a proper drink somewhere else.",
+     c:"1.2951,103.8542"},
+    {t:"light", n:"Lime juice or sugarcane", w:"Any hawker drinks stall", pr:"S$2–3",
+     d:"Fresh lime juice with a salted sour plum dropped in, or sugarcane pressed with lemon. The drinks stall is always the one at the end of the row, and it is the answer to a hawker lunch in thirty-degree heat.",
+     o:"“Lime juice with plum, less ice” — or “sugarcane, add lemon”.",
+     x:"",
+     c:"1.2803,103.8447"}
+  ],
+  buy:[
+    {n:"Kaya", d:"Ya Kun and Killiney sell jars of kaya that last a month unopened. Good for the flight home.", c:"1.2830,103.8480"},
+    {n:"Peranakan beadwork", d:"Rumah Bebe in Katong sells kasut manek — beaded slippers — and kebaya, made by hand. Off the walk.", c:"1.3053,103.9050"},
+    {n:"Bengawan Solo", d:"Pandan chiffon and kueh lapis, the layered cake. There is a counter at Changi.", c:"1.3570,103.9870"}
+  ],
+  screen:[
+    {n:"CHIJMES", f:"Crazy Rich Asians", y:"2018", r:"The wedding",
+     d:"The Gothic chapel of the former Convent of the Holy Infant Jesus, where Colin and Araminta marry with a river flowing down the aisle.",
+     q:"About halfway into a 120-minute film.",
+     x:"Two minutes from Raffles, now a courtyard of restaurants. The chapel is let for events; look in through the doors.",
+     c:"1.2952,103.8520"},
+    {n:"Newton Food Centre", f:"Crazy Rich Asians", y:"2018", r:"The hawker dinner",
+     d:"Nick takes Rachel straight from the airport to a hawker centre for her first night in Singapore, and the table fills with satay, chilli crab and oyster omelette. It is the most honest scene in the film about how the city actually eats.",
+     q:"About twenty minutes into a 120-minute film, straight after the arrival.",
+     x:"North of the centre; an evening taxi, not a walk stop.",
+     c:"1.3120,103.8394"},
+    {n:"Gardens by the Bay", f:"Crazy Rich Asians", y:"2018", r:"The wedding reception",
+     d:"The wedding reception moves outdoors under the Supertree Grove, lit up after dark, with the lanterns floating in the water.",
+     q:"Straight after the CHIJMES wedding, a little past the hour mark.",
+     x:"Stop 1 of the walk. The Supertrees run a free light-and-sound show at 19:45 and 20:45 if you are still in town that night.",
+     c:"1.2816,103.8636"}
+  ],
+  know:[
+    "Disembarkation: alongside from 07:00. The clock above is not for the yacht — set it to when you leave for Changi.",
+    "Chewing gum is not sold here, and littering, smoking outside marked areas and jaywalking are all fined. The rules are enforced.",
+    "Tap water is safe and cold everywhere.",
+    "GST refund: register purchases in the shop and claim at the eTRS kiosks at Changi before security.",
+    "January is the north-east monsoon: hot, humid, with heavy afternoon showers that end as suddenly as they start. Carry an umbrella.",
+    "Changi is 25 minutes from the centre by taxi. Jewel, the dome with the indoor waterfall, is landside at Terminal 1 — worth an hour if the flight is late."
+  ]
+}
+];
+
+/* ============================================================
+   STATE — localStorage where available, memory otherwise.
+   ============================================================ */
+const mem = {};
+const store = {
+  get(k){ try{ const v = localStorage.getItem(k); return v===null?mem[k]:v; }catch(e){ return mem[k]; } },
+  set(k,v){ mem[k]=v; try{ localStorage.setItem(k,v); }catch(e){} },
+  del(k){ delete mem[k]; try{ localStorage.removeItem(k); }catch(e){} }
+};
+
+let cur = store.get("sbhk.port") || PORTS[0].id;
+if(!PORTS.some(p => p.id === cur)) cur = PORTS[0].id;
+let tab = "walk";
+const port = () => PORTS.find(p => p.id === cur);
+const doneKey = id => "sbhk.done." + id;
+const getDone = () => { try{ return JSON.parse(store.get(doneKey(cur)) || "[]"); }catch(e){ return []; } };
+const setDone = a => store.set(doneKey(cur), JSON.stringify(a));
+const timeKey = (id,which) => "sbhk." + which + "." + id;
+/* Alongside every hand-set time we keep the printed time it was typed over.
+   Without it an edit made on an old itinerary sits there for good, and the
+   book quietly shows a sailing time the ship no longer keeps. */
+const timeBaseKey = (id,which) => timeKey(id,which) + ".base";
+function shipTime(id, which, printed){
+  const set = store.get(timeKey(id,which));
+  if(!set) return printed;
+  if(store.get(timeBaseKey(id,which)) !== printed){   /* the itinerary moved under it */
+    store.del(timeKey(id,which));
+    store.del(timeBaseKey(id,which));
+    return printed;
+  }
+  return set;
+}
+function setShipTime(id, which, v, printed){
+  store.set(timeKey(id,which), v);
+  store.set(timeBaseKey(id,which), printed);
+}
+
+/* chart state */
+const KIND = {
+  walk:   {t:"Stops",  col:"#131E28"},
+  eat:    {t:"Eat",    col:"#8C2F39"},
+  taste:  {t:"Taste",  col:"#4F6B2F"},
+  buy:    {t:"Buy",    col:"#1D5A6E"},
+  screen: {t:"Screen", col:"#8A6B1F"}
+};
+const layers = {walk:true, eat:true, taste:true, buy:true, screen:true};
+let fitAll = false;
+let sel = null;                 /* "walk:3" */
+const TOWN_KM = 1.5;            /* anything further is plotted off-chart, unless the port sets townKm */
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const hhmm = m => { const h = Math.floor(m/60), r = Math.round(m%60);
+  return h ? h + "h " + String(r).padStart(2,"0") + "m" : r + "m"; };
+
+function minsToday(t){ if(!t) return null; const [h,m] = t.split(":").map(Number); return h*60+m; }
+function nowMins(){ const d = new Date(); return d.getHours()*60 + d.getMinutes(); }
+function clockFromMins(m){ m = ((m % 1440) + 1440) % 1440;
+  return String(Math.floor(m/60)).padStart(2,"0") + ":" + String(m%60).padStart(2,"0"); }
+
+/* --- geography --------------------------------------------- */
+const RAD = Math.PI/180;
+function ll(c){
+  if(!c) return null;
+  const p = String(c).split(",").map(Number);
+  return (p.length===2 && isFinite(p[0]) && isFinite(p[1])) ? {lat:p[0], lon:p[1]} : null;
+}
+function kmBetween(a,b){
+  const dLat=(b.lat-a.lat)*RAD, dLon=(b.lon-a.lon)*RAD;
+  const s = Math.sin(dLat/2)**2 +
+            Math.cos(a.lat*RAD)*Math.cos(b.lat*RAD)*Math.sin(dLon/2)**2;
+  return 2*6371*Math.asin(Math.min(1,Math.sqrt(s)));
+}
+const COMPASS = ["N","NNE","NE","ENE","E","ESE","SE","SSE","S","SSW","SW","WSW","W","WNW","NW","NNW"];
+function compass(a,b){
+  const y = Math.sin((b.lon-a.lon)*RAD)*Math.cos(b.lat*RAD);
+  const x = Math.cos(a.lat*RAD)*Math.sin(b.lat*RAD) -
+            Math.sin(a.lat*RAD)*Math.cos(b.lat*RAD)*Math.cos((b.lon-a.lon)*RAD);
+  const deg = (Math.atan2(y,x)/RAD + 360) % 360;
+  return COMPASS[Math.round(deg/22.5) % 16];
+}
+const dist = km => km < 1 ? Math.round(km*1000) + " m" : km.toFixed(km<10?1:0) + " km";
+
+/* --- the one list everything else reads --------------------- */
+function points(p){
+  const out = [];
+  p.stops.forEach((s,i) => out.push(
+    {k:"walk", i, num:i+1, n:s.n, c:s.c, sub:s.dur+" min", d:s.w, x:s.x}));
+  (p.eat||[]).forEach((s,i) => out.push(
+    {k:"eat", i, num:i+1, n:s.n, c:s.c, sub:"", tag:s.t, d:s.d}));
+  (p.taste||[]).forEach((s,i) => out.push(
+    {k:"taste", i, num:i+1, n:s.n, c:s.c, sub:s.sp + " · " + s.pr, tag:"Food tour " + (i+1),
+     d:s.d, x:s.o + (s.x ? " " + s.x : "")}));
+  (p.buy||[]).forEach((s,i) => out.push(
+    {k:"buy", i, num:i+1, n:s.n, c:s.c,
+     sub: s.t === "shop" ? s.who + " \u00b7 " + s.pr : "",
+     tag: s.t === "shop" ? (s.off ? "Off the circuit" : "Shopping circuit") : "",
+     d:s.d, x: s.o ? s.o + (s.x ? " " + s.x : "") : s.x}));
+  (p.screen||[]).forEach((s,i) => out.push(
+    {k:"screen", i, num:i+1, n:s.n, c:s.c, sub:[s.f, s.y].filter(Boolean).join(" · "), tag:s.r, d:s.d, x:s.x, q:s.q}));
+  return out;
+}
+const keyOf = o => o.k + ":" + o.i;
+const plotted = p => points(p).filter(o => ll(o.c));
+function townCentre(p){
+  const pts = p.stops.map(s => ll(s.c)).filter(Boolean);
+  if(!pts.length) return {lat:0, lon:0};
+  return {lat: pts.reduce((a,b)=>a+b.lat,0)/pts.length,
+          lon: pts.reduce((a,b)=>a+b.lon,0)/pts.length};
+}
+const mapsHref = (c,n) => n
+  ? "https://www.google.com/maps/search/" + encodeURIComponent(n) + "/@" + c + ",17z"
+  : "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(c);
+
+/* ============================================================
+   RENDER — head, ports, tide
+   ============================================================ */
+function renderPortRail(){
+  $("#portRail").innerHTML = PORTS.map(p =>
+    '<button class="port-btn" role="tab" data-port="' + p.id + '" aria-selected="' +
+    (p.id===cur) + '">' + esc(p.name) + '</button>').join("");
+}
+
+function renderHead(){
+  const p = port();
+  $("#portName").textContent = p.name;
+  $("#portSub").textContent = p.sub;
+  $("#tideLabel").textContent = p.tideLabel || "Back on board in";
+  $("#aboardLabel").textContent = p.aboardLabel || "All aboard";
+  $("#dock").innerHTML = "<b>" + esc(p.dock.t) + "</b><span>" + esc(p.dock.d) + "</span>";
+  $("#ashore").value = shipTime(cur, "ashore", p.ashore);
+  $("#allAboard").value = shipTime(cur, "aboard", p.aboard);
+}
+
+function renderTide(){
+  const a = minsToday($("#ashore").value), b = minsToday($("#allAboard").value);
+  const n = nowMins(), clock = $("#tideClock"), fill = $("#tideFill");
+  if(a===null || b===null || b<=a){ clock.textContent = "—"; fill.style.width = "0%"; return; }
+  const left = b - n;
+  const onShoreDay = n >= a && n <= b;
+  if(onShoreDay){
+    clock.textContent = hhmm(left);
+    clock.classList.toggle("warn", left <= 60);
+    fill.style.width = Math.min(100, Math.max(0, ((n-a)/(b-a))*100)) + "%";
+  } else {
+    clock.textContent = hhmm(b-a);
+    clock.classList.remove("warn");
+    fill.style.width = "0%";
+  }
+}
+
+/* ============================================================
+   RENDER — walk
+   ============================================================ */
+function renderWalk(){
+  const p = port(), done = getDone();
+  let out = "";
+
+  // projection from first unchecked stop
+  const first = p.stops.findIndex((s,i) => !done.includes(i));
+  const b = minsToday($("#allAboard").value);
+  if(first > -1 && b !== null){
+    let need = 0;
+    for(let i=first;i<p.stops.length;i++){ if(done.includes(i)) continue;
+      need += p.stops[i].dur + (i < p.stops.length-1 ? p.stops[i].leg : 0); }
+    const finish = nowMins() + need;
+    const back = p.back || 0;          /* the drive or tender back to the yacht */
+    const slack = b - back - finish;
+    out += '<div class="proj' + (slack < 30 ? " tight" : "") + '"><b>If you start now</b>' +
+      'Remaining stops need <strong>' + hhmm(need) + '</strong> — finishing around <strong>' +
+      clockFromMins(finish) + '</strong>. ' +
+      (slack >= 0
+        ? 'That leaves ' + hhmm(slack) + (back
+            ? ' before you need to set off back — ' + hhmm(back) + ' to the yacht.'
+            : ' before ' + esc((p.aboardLabel || "all aboard").toLowerCase()) + '.')
+        : '<strong>That is ' + hhmm(-slack) + (back
+            ? ' past the time to set off back. Cut something.'
+            : ' past ' + esc((p.aboardLabel || "all aboard").toLowerCase()) + '. Cut something.') + '</strong>') +
+      '</div>';
+  }
+
+  out += '<ol class="rail">' + p.stops.map((s,i) => {
+    const isDone = done.includes(i);
+    return '<li class="stop' + (isDone?" done":"") + '" data-i="' + i + '">' +
+      '<button class="dot" data-check="' + i + '" aria-label="Mark ' + esc(s.n) + ' done">' +
+        (isDone ? "&#10003;" : (i+1)) + '</button>' +
+      '<div class="stop-head" data-open="' + i + '">' +
+        '<span class="stop-name">' + esc(s.n) + '</span>' +
+        '<span class="stop-dur">' + s.dur + ' min</span>' +
+      '</div>' +
+      '<div class="stop-body">' +
+        '<p>' + esc(s.w) + '</p>' +
+        (s.l ? '<div class="look"><b>Look for</b>' + esc(s.l) + '</div>' : '') +
+        (s.x ? '<p style="margin-top:8px;color:var(--mute);font-size:13.5px">' + esc(s.x) + '</p>' : '') +
+        '<a class="geo" href="' + mapsHref(s.c, s.n) + '">' + s.c + ' · Maps</a>' +
+        '<button class="geo btn" data-goto="walk:' + i + '">On chart</button>' +
+        (i < p.stops.length-1 ? '<div class="leg">&darr; ' + s.leg + ' min ' + (s.by || 'walk') + ' to ' +
+          esc(p.stops[i+1].n) + '</div>' : '') +
+      '</div></li>';
+  }).join("") + '</ol>';
+
+  return out;
+}
+
+/* ============================================================
+   RENDER — the food tour. Same rail as the walk, but there is
+   nothing to tick off: you either ate it or you did not.
+   ============================================================ */
+function renderTaste(){
+  const p = port(), t = p.taste || [];
+  if(!t.length) return '<p class="sec-note">Nothing listed for this port.</p>';
+
+  const total = t.reduce((a,s,i) => a + s.dur + (i < t.length-1 ? s.leg : 0), 0);
+  let out = '<div class="proj"><b>The food tour</b>' + esc(p.tasteNote) +
+    ' End to end it runs <strong>' + hhmm(total) + '</strong> including the walking between, ' +
+    'and it drops in and out at any stop.</div>';
+
+  out += '<ol class="rail">' + t.map((s,i) =>
+    '<li class="stop taste" data-i="' + i + '">' +
+      '<span class="dot static" aria-hidden="true">' + (i+1) + '</span>' +
+      '<div class="stop-head" data-open="' + i + '">' +
+        '<span class="stop-name">' + esc(s.sp) +
+          '<span class="stop-where">' + esc(s.n) + '</span></span>' +
+        '<span class="stop-dur">' + s.dur + ' min<em>' + esc(s.pr) + '</em></span>' +
+      '</div>' +
+      '<div class="stop-body">' +
+        '<p>' + esc(s.d) + '</p>' +
+        '<div class="look ord"><b>Order</b>' + esc(s.o) + '</div>' +
+        (s.x ? '<p style="margin-top:8px;color:var(--mute);font-size:13.5px">' + esc(s.x) + '</p>' : '') +
+        '<a class="geo" href="' + mapsHref(s.c, s.n) + '">' + s.c + ' · Maps</a>' +
+        '<button class="geo btn" data-goto="taste:' + i + '">On chart</button>' +
+        (i < t.length-1 ? '<div class="leg">&darr; ' + s.leg + ' min walk to ' +
+          esc(t[i+1].n) + '</div>' : '') +
+      '</div></li>').join("") + '</ol>';
+
+  return out + renderSips();
+}
+
+/* ============================================================
+   RENDER — drink this here. Two per port and no more: the one
+   the place itself actually makes, and the long cold one for a
+   hot afternoon. It rides at the foot of the food tour rather
+   than taking a tab of its own.
+   ============================================================ */
+function renderSips(){
+  const p = port(), s = p.sip || [];
+  if(!s.length) return "";
+
+  return '<section class="sips"><h3>Drink this here</h3>' +
+    '<p class="sec-note">' + esc(p.sipNote) + '</p>' +
+    s.map(d => {
+      const lt = d.t === "light";
+      return '<article class="sip">' +
+        '<span class="sip-kind' + (lt ? " lt" : "") + '">' +
+          (lt ? "The light one" : "The local one") + '</span>' +
+        '<span class="sip-name">' + esc(d.n) + '</span>' +
+        '<div class="sip-where"><span>' + esc(d.w) + '</span><em>' + esc(d.pr) + '</em></div>' +
+        '<p>' + esc(d.d) + '</p>' +
+        '<div class="look ord' + (lt ? " lt" : "") + '"><b>Ask for</b>' + esc(d.o) + '</div>' +
+        (d.x ? '<p class="note">' + esc(d.x) + '</p>' : '') +
+        '<a class="geo" href="' + mapsHref(d.c, d.w) + '">' + d.c + ' \u00b7 Maps</a>' +
+      '</article>';
+    }).join("") + '</section>';
+}
+
+/* ============================================================
+   RENDER — cards
+   ============================================================ */
+function glyph(k, num){
+  return '<span class="gly k-' + k + '" aria-hidden="true"><i>' + num + '</i></span>';
+}
+
+function card(o){
+  const k = keyOf(o), L = ll(o.c);
+  return '<article class="card' + (sel===k ? " hi" : "") + '" id="card-' + k + '">' +
+    '<div class="card-head">' + glyph(o.k, o.num) +
+      '<div class="card-title"><span class="card-name">' + esc(o.n) + '</span>' +
+        (o.sub ? '<span class="card-meta">' + esc(o.sub) + '</span>' : '') +
+        (o.tag ? '<span class="entry-tag">' + esc(o.tag) + '</span>' : '') + '</div>' +
+    '</div>' +
+    '<p>' + esc(o.d) + '</p>' +
+    (o.q ? '<p class="cue"><b>Where to find it</b>' + esc(o.q) + '</p>' : '') +
+    (o.x ? '<p class="note">' + esc(o.x) + '</p>' : '') +
+    '<div class="card-foot">' +
+      (L ? '<span class="coord">' + esc(o.c) + '</span>' +
+           (geo.fix ? '<span class="fromhere">' + dist(kmBetween(geo.fix, L)) + ' ' +
+                      compass(geo.fix, L) + ' of you</span>' : '') +
+           '<a href="' + mapsHref(o.c, o.n) + '">Open in Maps</a>' +
+           '<button data-goto="' + k + '">Show on map</button>'
+         : '<span class="coord">No pin — nothing was filmed here</span>') +
+    '</div></article>';
+}
+
+/* ============================================================
+   RENDER — buy. Two lists that behave differently: the crafts
+   are a matter of telling real from imported, so they stay cards;
+   the shops are a route with walking between them, so they get
+   the same rail as the food tour.
+   ============================================================ */
+function renderBuy(){
+  const p = port(), all = p.buy || [];
+  if(!all.length) return '<p class="sec-note">' + esc(p.buyNote || "Nothing listed for this port.") + '</p>';
+
+  const pts = {};
+  points(p).forEach(o => { if(o.k === "buy") pts[o.i] = o; });
+
+  const goods = [], circuit = [], aside = [];
+  all.forEach((s,i) => {
+    if(s.t !== "shop") goods.push({s,i});
+    else (s.off ? aside : circuit).push({s,i});
+  });
+
+  let out = p.buyNote ? '<p class="sec-note">' + esc(p.buyNote) + '</p>' : "";
+  out += goods.map(g => card(pts[g.i])).join("");
+  if(!circuit.length && !aside.length) return out;
+
+  const total = circuit.reduce((a,x,n) =>
+    a + (x.s.dur||0) + (n < circuit.length-1 ? (x.s.leg||0) : 0), 0);
+
+  out += '<section class="circ"><h3>The shopping circuit</h3>' +
+    '<div class="proj"><b>Linen, on foot</b>' + esc(p.circuitNote || "") +
+    ' End to end it runs <strong>' + hhmm(total) + '</strong> including the walking between, ' +
+    'and it drops in and out at any stop.</div>';
+
+  out += '<ol class="rail">' + circuit.map((x,n) => {
+    const s = x.s;
+    return '<li class="stop buy" data-i="' + n + '">' +
+      '<span class="dot static" aria-hidden="true">' + (n+1) + '</span>' +
+      '<div class="stop-head" data-open="' + n + '">' +
+        '<span class="stop-name">' + esc(s.n) +
+          '<span class="stop-where">' + esc(s.w) + '</span></span>' +
+        '<span class="stop-dur">' + s.dur + ' min<em>' + esc(s.pr) + '</em></span>' +
+      '</div>' +
+      '<div class="stop-body">' +
+        '<p>' + esc(s.d) + '</p>' +
+        '<div class="look shop"><b>Look for</b>' + esc(s.o) + '</div>' +
+        (s.x ? '<p style="margin-top:8px;color:var(--mute);font-size:13.5px">' +
+               esc(s.x) + '</p>' : '') +
+        '<a class="geo" href="' + mapsHref(s.c, s.n) + '">' + s.c + ' \u00b7 Maps</a>' +
+        '<button class="geo btn" data-goto="buy:' + x.i + '">On chart</button>' +
+        (s.brk ? '<div class="brk">' + esc(s.brk) + '</div>' : '') +
+        (n < circuit.length-1 ? '<div class="leg">&darr; ' + s.leg + ' min walk to ' +
+          esc(circuit[n+1].s.n) + '</div>' : '') +
+      '</div></li>';
+  }).join("") + '</ol>';
+
+  if(aside.length) out += '<p class="sec-note" style="margin:16px 0 10px">' +
+    'Not on the circuit \u2014 worth a quarter of an hour only if you are passing anyway.</p>' +
+    aside.map(a => card(pts[a.i])).join("");
+
+  return out + '</section>';
+}
+
+function renderCards(kind, note){
+  const list = points(port()).filter(o => o.k === kind);
+  if(!list.length) return '<p class="sec-note">Nothing listed for this port.</p>';
+  return (note ? '<p class="sec-note">' + note + '</p>' : '') +
+         list.map(card).join("");
+}
+
+/* ============================================================
+   WHERE AM I — the phone's own GPS. Needs no signal, only sky.
+   ============================================================ */
+const geo = {on:false, fix:null, err:null, id:null};
+
+function startGeo(){
+  if(!("geolocation" in navigator)){ geo.err = "This browser has no location service."; onFix(); return; }
+  if(!window.isSecureContext){ geo.err = "Location needs a secure (https) page."; onFix(); return; }
+  geo.on = true; geo.err = null; store.set("sbhk.geo","1");
+  try{
+    geo.id = navigator.geolocation.watchPosition(
+      p => { geo.fix = {lat:p.coords.latitude, lon:p.coords.longitude,
+                        acc:p.coords.accuracy || 0, t:p.timestamp};
+             geo.err = null; onFix(); },
+      e => { geo.err = e.code === 1
+               ? "Location refused. Allow it for this site in your browser settings."
+               : e.code === 2
+               ? "No fix yet. GPS wants a view of the sky; stone alleys are slow."
+               : "Location timed out. Try again in the open.";
+             onFix(); },
+      {enableHighAccuracy:true, maximumAge:4000, timeout:25000});
+  }catch(e){ geo.on = false; geo.err = "Location unavailable."; onFix(); }
+}
+function stopGeo(){
+  try{ if(geo.id != null) navigator.geolocation.clearWatch(geo.id); }catch(e){}
+  geo.id = null; geo.on = false; geo.fix = null; geo.err = null;
+  buzz.near = {}; buzz.loose = false; clearTimeout(buzz.retry); buzz.retry = 0; clearHail();
+  store.del("sbhk.geo"); onFix();
+}
+function onFix(){
+  checkProximity();          /* runs on every tab — the phone is usually in a pocket */
+  if(tab !== "chart") return;
+  paintLocBar();
+  if(mode === "map" && geo.fix && followMe) centreOn(geo.fix.lat, geo.fix.lon);
+  else paintMe();
+}
+function nearestTo(fix){
+  let best = null;
+  plotted(port()).forEach(o => {
+    if(!layers[o.k]) return;
+    const L = ll(o.c), d = kmBetween(fix, L);
+    if(!best || d < best.km) best = {o, L, km:d};
+  });
+  return best;
+}
+
+/* ============================================================
+   PROXIMITY BUZZ — the phone taps your leg when something comes
+   within reach, in a rhythm that tells you what kind of thing it is,
+   so you can keep your eyes on the street and the phone in a pocket.
+   A buzz is silent and invisible, and an iPhone will not vibrate from
+   a web page at all, so every hail also raises a card on the screen.
+   ============================================================ */
+/* One rhythm per kind, in milliseconds: sound, pause, sound, pause…  The same
+   array drives all three channels, so the key drawn under the bar is honest
+   whichever one your phone happens to have.  The pitches are a plain pentatonic
+   — no two adjacent, so they stay apart in a noisy calle. */
+const BUZZ = {
+  walk:   {r:60, pat:[420],                hz:392.00},  /* one long    — a stop on the walk  */
+  eat:    {r:45, pat:[90,80,90],           hz:587.33},  /* two short   — a kitchen           */
+  taste:  {r:45, pat:[60,60,60,60,60],     hz:783.99},  /* three quick — a food-tour counter */
+  buy:    {r:40, pat:[70,90,260],          hz:440.00},  /* short, long — a shop              */
+  screen: {r:55, pat:[260,90,80,90,260],   hz:659.25}   /* clapper     — a filming location  */
+};
+const LEAVE   = 1.7;      /* how far out of the ring you must walk before it can hail again */
+const ACC_MAX = 90;       /* a fix looser than this cannot tell 40 m from 400 */
+const HAIL_GAP = 5000;    /* never two hails on top of each other */
+const HAIL_HOLD = 12000;  /* how long the card stays up */
+
+const buzz = {
+  on: store.get("sbhk.buzz") !== "0",   /* on by default — it does nothing until location is */
+  near: {},                           /* key -> true while you are still inside the ring   */
+  last: 0,
+  timer: 0,
+  retry: 0,
+  loose: false                        /* standing still on a fix too loose to trust        */
+};
+const sound = {on: store.get("sbhk.sound") === "1", ctx:null};   /* off until asked for */
+
+/* --- channel 1: real vibration. Android has it; no iPhone does. ------------ */
+const canVibrate = () => typeof navigator.vibrate === "function";
+function fire(pat){
+  if(!canVibrate()) return false;
+  try{ return navigator.vibrate(pat); }catch(e){ return false; }
+}
+
+/* --- channel 2: the only tap an iPhone will give a web page ----------------
+   Safari 17.4 draws <input type="checkbox" switch> as the native iOS toggle,
+   and flipping one fires the system haptic. Borrowing it is undocumented and
+   Apple may close it in any release, so it is a bonus, never the plan: one
+   tap per beat of the rhythm, and the sound and the card carry the meaning. */
+let swEl = null;
+const canSwitch = () => {
+  try{ return "switch" in document.createElement("input"); }catch(e){ return false; }
+};
+/* the input itself, not its label — clicking a label forwards a second click to
+   the control, which would spend two haptics on every beat */
+function switchEl(){
+  if(swEl && swEl.isConnected) return swEl;
+  const l = document.createElement("span");
+  l.className = "haptic-switch";
+  l.setAttribute("aria-hidden", "true");
+  const i = document.createElement("input");
+  i.type = "checkbox"; i.tabIndex = -1;
+  try{ i.setAttribute("switch", ""); }catch(e){}
+  l.appendChild(i);
+  document.body.appendChild(l);
+  swEl = i;
+  return i;
+}
+function tapSwitch(pat){
+  if(!canSwitch()) return false;
+  const el = switchEl();
+  let t = 0;
+  for(let i = 0; i < pat.length; i += 2){
+    setTimeout(() => { try{ el.click(); }catch(e){} }, t);
+    t += pat[i] + (pat[i+1] || 0);
+  }
+  return true;
+}
+
+/* --- channel 3: a tone, for the phones that will do neither ---------------- */
+function audioCtx(){
+  if(sound.ctx) return sound.ctx;
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return null;
+  try{ sound.ctx = new AC(); }catch(e){ return null; }
+  return sound.ctx;
+}
+const canSound = () => !!(window.AudioContext || window.webkitAudioContext);
+/* iOS starts every context asleep and only a real finger may wake it */
+function unlockAudio(){
+  if(!sound.on) return;
+  const c = audioCtx();
+  if(c && c.state === "suspended"){ try{ c.resume(); }catch(e){} }
+}
+function chime(k){
+  const c = audioCtx(); if(!c) return false;
+  if(c.state === "suspended"){ try{ c.resume(); }catch(e){} }
+  const pat = BUZZ[k].pat, hz = BUZZ[k].hz;
+  let t = c.currentTime + 0.02;
+  for(let i = 0; i < pat.length; i += 2){
+    const dur = Math.max(0.05, pat[i]/1000);
+    const osc = c.createOscillator(), g = c.createGain();
+    osc.type = "sine";
+    osc.frequency.value = hz;
+    g.gain.setValueAtTime(0.0001, t);                      /* a ramp, or it clicks */
+    g.gain.exponentialRampToValueAtTime(0.20, t + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    osc.connect(g); g.connect(c.destination);
+    osc.start(t); osc.stop(t + dur + 0.03);
+    t += dur + (pat[i+1] || 0)/1000;
+  }
+  return true;
+}
+
+/* Every channel this phone has, at once. Returns true if anything was felt. */
+function signal(k){
+  const pat = BUZZ[k].pat;
+  let felt = fire(pat);
+  if(!felt) felt = tapSwitch(pat);
+  if(sound.on) chime(k);
+  return felt || sound.on;
+}
+
+/* The watch only speaks when you move, so a hail held back for any reason has to
+   ask to be looked at again — otherwise standing still is the same as being told
+   nothing at all. */
+function recheckIn(ms){
+  clearTimeout(buzz.retry);
+  buzz.retry = setTimeout(() => { buzz.retry = 0; checkProximity(); }, ms);
+}
+
+/* Returns true when it actually hailed. */
+function checkProximity(){
+  clearTimeout(buzz.retry); buzz.retry = 0;
+  const was = buzz.loose; buzz.loose = false;
+  const note = () => { if(was !== buzz.loose && tab === "chart") paintBuzzKey(); };
+  if(!buzz.on || !geo.on || !geo.fix){ note(); return false; }
+  const fix = geo.fix;
+  if(fix.acc > ACC_MAX){                  /* keep the rings armed, just do not trust this fix */
+    buzz.loose = true; note(); return false;
+  }
+  note();
+
+  const done = getDone();
+  let hit = null;
+  plotted(port()).forEach(o => {
+    const cfg = BUZZ[o.k]; if(!cfg) return;
+    const k = keyOf(o), L = ll(o.c), m = kmBetween(fix, L)*1000;
+    if(buzz.near[k]){ if(m > cfg.r*LEAVE) delete buzz.near[k]; return; }
+    if(!layers[o.k]) return;                              /* layer off — no hail  */
+    if(o.k === "walk" && done.includes(o.i)) return;      /* stop already ticked  */
+    if(m <= cfg.r && (!hit || m < hit.m)) hit = {o, L, m, cfg, k};
+  });
+  if(!hit) return false;
+
+  const t = Date.now();
+  if(t - buzz.last < HAIL_GAP){                /* one hail at a time — come back for this one */
+    recheckIn(HAIL_GAP - (t - buzz.last) + 60);
+    return false;
+  }
+  buzz.last = t;
+  buzz.near[hit.k] = true;                     /* armed again only once you walk back out  */
+  signal(hit.o.k);
+  showHail(hit);
+  recheckIn(HAIL_GAP + 60);      /* two pins on one corner get one hail each, in turn */
+  return true;
+}
+
+/* Native full screen paints nothing outside the element that asked for it, so the
+   card has to live inside the map while the map has the screen to itself. */
+function hailHome(){
+  let host = $("#hail");
+  if(!host){
+    host = document.createElement("div");
+    host.className = "hail"; host.id = "hail";
+    host.setAttribute("role", "status");
+    host.setAttribute("aria-live", "polite");
+  }
+  const parent = fsElement() || document.body;
+  if(host.parentNode !== parent) parent.appendChild(host);
+  return host;
+}
+function rehomeHail(){ if($("#hail")) hailHome(); }
+
+function showHail(h){
+  const o = h.o;
+  const host = hailHome();
+  host.innerHTML =
+    '<div class="hail-in k-' + o.k + '">' + glyph(o.k, o.num) +
+      '<div class="hail-body">' +
+        '<span class="hail-kick">' + esc(KIND[o.k].t) + ' &middot; within reach</span>' +
+        '<span class="hail-name">' + esc(o.n) + '</span>' +
+        '<span class="hail-sub">' + Math.round(h.m) + ' m ' + compass(geo.fix, h.L) +
+          (o.sub ? ' &middot; ' + esc(o.sub) : '') + '</span>' +
+        '<button class="hail-go" data-goto="' + h.k + '">Show on map</button>' +
+      '</div>' +
+      '<button class="hail-x" data-hailx="1" aria-label="Dismiss">&times;</button>' +
+    '</div>';
+  clearTimeout(buzz.timer);
+  buzz.timer = setTimeout(clearHail, HAIL_HOLD);
+}
+function clearHail(){
+  clearTimeout(buzz.timer);
+  const h = $("#hail"); if(h) h.remove();
+}
+
+/* ============================================================
+   RENDER — the view. Two of them:
+     chart  a drawn plot from the coordinates. No network, ever.
+     map    real OpenStreetMap tiles, when there is a signal.
+   Both carry the same pins and both show your own position.
+   ============================================================ */
+const VB = {w:380, l:24, r:12, t:12, b:24};   /* height is set per chart, from the ground */
+let mode = (store.get("sbhk.mode") === "map") ? "map" : "chart";
+let mapView = null;                 /* {lat, lon, z} — rebuilt per port */
+let followMe = false;
+let mapFull = false;                /* map blown up to the whole screen */
+let proj = null;                    /* {toXY, W, H, mPerUnit, svg} for whichever view is up */
+let tiles = new Map();              /* live tile <img> elements, keyed z/x/y */
+
+const TILE_URL = "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+const MINZ = 11, MAXZ = 19;
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+
+/* --- Web Mercator, the projection the tiles are cut on ------- */
+const mercY = lat => Math.log(Math.tan(Math.PI/4 + clamp(lat,-85,85)*RAD/2));
+function worldPx(lat, lon, z){
+  const s = 256*Math.pow(2, z);
+  return {x:(lon+180)/360*s, y:(0.5 - mercY(lat)/(2*Math.PI))*s};
+}
+function pxToLL(x, y, z){
+  const s = 256*Math.pow(2, z);
+  return {lon: x/s*360 - 180,
+          lat: (2*Math.atan(Math.exp((0.5 - y/s)*2*Math.PI)) - Math.PI/2)/RAD};
+}
+const mPerPx = (lat, z) => 156543.03392*Math.cos(lat*RAD)/Math.pow(2, z);
+
+/* --- the working set ---------------------------------------- */
+function chartSets(){
+  const p = port(), centre = townCentre(p), R = p.townKm || TOWN_KM;
+  const all = plotted(p).map(o => Object.assign({}, o, {ll: ll(o.c)}));
+  const near = all.filter(o => kmBetween(centre, o.ll) <= R);
+  const far  = all.filter(o => kmBetween(centre, o.ll) >  R);
+  const pool = (mode === "map" || fitAll) ? all : near;
+  return {p, centre, all, near, far, shown: pool.filter(o => layers[o.k])};
+}
+
+/* ============================================================
+   The shell — toolbar, locator bar, view host, card, index
+   ============================================================ */
+function chartShell(){
+  const s = chartSets();
+  let html = '<div class="tools">' +
+    '<span class="seg">' +
+      '<button class="lay wide" data-setmode="chart" aria-pressed="' + (mode==="chart") +
+        '">Chart</button>' +
+      '<button class="lay wide" data-setmode="map" aria-pressed="' + (mode==="map") +
+        '">Map</button></span>' +
+    Object.keys(KIND).map(k => {
+      const n = s.all.filter(o => o.k===k).length;
+      return '<button class="lay" data-layer="' + k + '" aria-pressed="' + !!layers[k] + '">' +
+        '<span class="sw k-' + k + '"></span>' + esc(KIND[k].t) + ' ' + n + '</button>';
+    }).join("") +
+    (mode==="map"
+      ? '<button class="lay" data-fitport="1">Fit port</button>'
+      : '<button class="lay" data-fit="1" aria-pressed="' + fitAll + '">' +
+        (fitAll ? "Whole coast" : "Town only") + '</button>') +
+    '<button class="lay" data-gpx="1">Download .gpx</button>' +
+  '</div>';
+
+  html += '<div class="locbar" id="locbar"></div>';
+  html += '<div class="buzzkey" id="buzzkey"></div>';
+  html += '<div class="viewbox ' + mode + (mode==="map" && mapFull ? ' fs' : '') +
+          '" id="viewbox"></div>';
+  html += '<div id="chartCard"></div>';
+
+  html += '<div class="index"><h3>Index</h3>' + (s.shown.length
+    ? s.shown.map(o => {
+        const k = keyOf(o);
+        return '<button class="ixrow" data-pin="' + k + '" aria-current="' + (sel===k) + '">' +
+          glyph(o.k, o.num) + '<span class="ixname">' + esc(o.n) + '</span>' +
+          '<span class="ixsub">' + esc(KIND[o.k].t) + '</span></button>';
+      }).join("")
+    : '<p class="sec-note">Nothing plotted — switch a layer back on.</p>') +
+    '<p class="sec-note" style="margin-top:12px">Decimal degrees, WGS 84 — the same numbers your ' +
+    'phone reads. In the cities pins are good to a block; on the islands and in the bay they mark ' +
+    'the village, the beach or the cave rather than a door — close enough to point a driver or a ' +
+    'boatman at, which is all they are for.' +
+    (mode==="chart" ? ' Where two pins would collide on the chart the marker is nudged clear and a ' +
+      'hairline points back to the true position.' : '') + '</p></div>';
+
+  html += offList(s.far, s.centre);
+  return html;
+}
+
+function offList(far, centre){
+  if(mode === "map" || fitAll || !far.length) return "";
+  const rows = far.filter(o => layers[o.k]).sort((a,b) =>
+    kmBetween(centre,a.ll) - kmBetween(centre,b.ll));
+  if(!rows.length) return "";
+  return '<div class="off"><h3>Off the chart</h3>' + rows.map(o =>
+    '<div class="offrow">' + glyph(o.k, o.num) +
+      '<span class="oname">' + esc(o.n) +
+        '<span class="osub">' + esc(o.sub || "") + '</span></span>' +
+      '<span class="bearing">' + compass(centre, o.ll) + ' ' + dist(kmBetween(centre, o.ll)) + '</span>' +
+    '</div>').join("") +
+    '<p class="sec-note" style="margin-top:10px">Bearings and distances are from the middle of the ' +
+    'day\'s stops. Switch to <strong>whole coast</strong>, or to the map, to plot them.</p></div>';
+}
+
+function drawView(){
+  if(mode === "map") drawMap(); else drawChart();
+  paintMe(); paintSel(); paintLocBar();
+}
+
+/* ============================================================
+   Locator bar
+   ============================================================ */
+function paintLocBar(){
+  const bar = $("#locbar"); if(!bar) return;
+  let btns, note;
+  if(!geo.on){
+    btns = '<button class="lay" data-geo="on">Show where I am</button>';
+    note = '<span class="locnote">The phone\'s own GPS. It works with no signal.</span>';
+  } else if(geo.err){
+    btns = '<button class="lay" data-geo="off" aria-pressed="true">Location on</button>';
+    note = '<span class="locnote warn">' + esc(geo.err) + '</span>';
+  } else if(!geo.fix){
+    btns = '<button class="lay" data-geo="off" aria-pressed="true">Location on</button>';
+    note = '<span class="locnote">Waiting for a fix…</span>';
+  } else {
+    const n = nearestTo(geo.fix);
+    btns = '<button class="lay" data-geo="off" aria-pressed="true">Location on</button>' +
+      (mode === "map"
+        ? '<button class="lay" data-geo="follow" aria-pressed="' + followMe + '">Follow</button>'
+        : '');
+    note = '<span class="locnote">&plusmn;' + Math.round(geo.fix.acc) + ' m' +
+        (n ? ' &middot; nearest ' + esc(n.o.n) + ' <strong>' + dist(n.km) + ' ' +
+             compass(geo.fix, n.L) + '</strong>' : '') + '</span>';
+  }
+  if(geo.on){
+    btns += '<button class="lay" data-buzz="1" aria-pressed="' + buzz.on + '">' +
+      (canVibrate() ? "Buzz" : "Hail") + ' near</button>';
+    if(buzz.on && canSound())
+      btns += '<button class="lay" data-sound="1" aria-pressed="' + sound.on + '">Sound</button>';
+  }
+  bar.innerHTML = btns + note;
+  paintBuzzKey();
+}
+
+/* the rhythms, drawn as they are felt — and tappable, so you can learn them
+   before you need them (a tap is also the gesture some browsers want before
+   they will vibrate at all) */
+function paintBuzzKey(){
+  const el = $("#buzzkey"); if(!el) return;
+  if(!geo.on || !buzz.on){ el.innerHTML = ""; return; }
+  el.innerHTML = Object.keys(BUZZ).map(k => {
+    const bars = BUZZ[k].pat.filter((v,i) => i % 2 === 0)
+      .map(ms => '<i style="width:' + Math.max(3, Math.round(ms/26)) + 'px"></i>').join("");
+    return '<button class="bzrow" data-bztest="' + k + '" data-off="' + !layers[k] + '"' +
+      ' aria-label="' + esc(KIND[k].t) + ', ' + BUZZ[k].r + ' metres' +
+      (layers[k] ? '' : ' — layer switched off, it will not hail you') + '. Tap to feel the rhythm.">' +
+      '<span class="bzpat k-' + k + '">' + bars + '</span>' + esc(KIND[k].t) +
+      ' <span class="bzr">' + BUZZ[k].r + '&thinsp;m</span></button>';
+  }).join("") +
+  '<p class="buzznote' + (buzz.loose ? ' warn' : '') + '">' + (buzz.loose
+    ? "Fix is loose to &plusmn;" + Math.round(geo.fix.acc) + " m — too vague to say you are at a door. " +
+      "Nothing will buzz until it tightens."
+    : howItHails()) +
+  '</p>';
+}
+
+/* Say what this particular phone will actually do — no phone does all of it */
+function howItHails(){
+  const tail = " Each pin hails once; walk out and back to be hailed again. " +
+               "Layers switched off stay quiet.";
+  if(canVibrate())
+    return "Tap a rhythm to feel it." + tail;
+  if(canSwitch())
+    return "No iPhone vibrates from a web page. This one borrows Safari&rsquo;s switch haptic — " +
+           "one tap a beat, and Apple may take it back, so turn Sound on for the whole rhythm." + tail;
+  return "This browser will neither vibrate nor tap. Turn Sound on, or watch for the card." + tail;
+}
+
+/* ============================================================
+   Your position, painted into whichever view is up
+   ============================================================ */
+function paintMe(){
+  if(!proj || !proj.svg || !proj.svg.isConnected) return;
+  const old = proj.svg.querySelector("#me"); if(old) old.remove();
+  if(!geo.on || !geo.fix) return;
+
+  const NS = "http://www.w3.org/2000/svg";
+  const g = document.createElementNS(NS, "g");
+  g.setAttribute("id","me");
+  const pt = proj.toXY(geo.fix.lat, geo.fix.lon);
+  const inside = pt.x >= 2 && pt.x <= proj.W-2 && pt.y >= 2 && pt.y <= proj.H-2;
+
+  if(inside){
+    const r = clamp(geo.fix.acc/proj.mPerUnit, 5, proj.W);
+    g.innerHTML =
+      '<circle class="me-acc" cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) +
+        '" r="' + r.toFixed(1) + '"/>' +
+      '<circle class="me-dot" cx="' + pt.x.toFixed(1) + '" cy="' + pt.y.toFixed(1) + '" r="5"/>';
+  } else {
+    /* off the edge — point at it, and say how far */
+    const cx = proj.W/2, cy = proj.H/2;
+    const dx = pt.x - cx, dy = pt.y - cy;
+    const m = Math.max(Math.abs(dx)/(proj.W/2 - 16), Math.abs(dy)/(proj.H/2 - 16), 1e-6);
+    const ex = cx + dx/m, ey = cy + dy/m;
+    const ang = Math.atan2(dy, dx)*180/Math.PI + 90;
+    const centre = townCentre(port());
+    g.innerHTML =
+      '<g transform="translate(' + ex.toFixed(1) + ',' + ey.toFixed(1) + ') rotate(' +
+        ang.toFixed(1) + ')"><polygon class="me-arrow" points="0,-10 6.5,6 -6.5,6"/></g>' +
+      '<text class="me-lbl" x="' + clamp(ex, 30, proj.W-30).toFixed(1) + '" y="' +
+        clamp(ey + (dy>0 ? -14 : 20), 12, proj.H-6).toFixed(1) +
+        '" text-anchor="middle">you &middot; ' +
+        esc(dist(kmBetween(centre, geo.fix)) + " " + compass(centre, geo.fix)) + '</text>';
+  }
+  proj.svg.appendChild(g);
+}
+
+/* ============================================================
+   Selection — patched in place so the map is not torn down
+   ============================================================ */
+function paintSel(){
+  const host = $("#chartCard");
+  if(host){
+    const o = chartSets().shown.find(x => keyOf(x) === sel);
+    host.innerHTML = o ? card(o) : "";
+  }
+  document.querySelectorAll(".ixrow").forEach(r =>
+    r.setAttribute("aria-current", r.dataset.pin === sel));
+  document.querySelectorAll("g[data-pin]").forEach(g =>
+    g.classList.toggle("on", g.dataset.pin === sel));
+}
+
+function selectPin(k, centreIt){
+  sel = (sel === k && !centreIt) ? null : k;
+  if(mode === "map"){
+    if(sel && centreIt){
+      const o = chartSets().all.find(x => keyOf(x) === sel);
+      if(o){ followMe = false; mapView.lat = o.ll.lat; mapView.lon = o.ll.lon;
+             mapView.z = Math.max(mapView.z, 17); drawMap(); paintMe(); }
+    } else drawOverlay();
+  } else { drawChart(); paintMe(); }
+  paintSel(); paintLocBar();
+}
+
+/* ============================================================
+   The drawn chart — no tiles, no network
+   ============================================================ */
+const GRID_STEPS = [0.5,0.2,0.1,0.05,0.02,0.01,0.005,0.002,0.001,0.0005];
+const BAR_STEPS  = [10,20,50,100,200,500,1000,2000,5000,10000,20000,50000];
+function niceStep(span){
+  for(const s of GRID_STEPS){ const n = span/s; if(n >= 2 && n <= 6) return s; }
+  return GRID_STEPS[GRID_STEPS.length-1];
+}
+
+function drawChart(){
+  const host = $("#viewbox"); if(!host) return;
+  tiles = new Map();
+  const {p, shown} = chartSets();
+  if(!shown.length){
+    host.innerHTML = '<div class="chart-empty">Nothing to plot — switch a layer back on.</div>';
+    proj = null; return;
+  }
+
+  /* equirectangular, north up */
+  const centre = townCentre(p);
+  const kx = Math.cos(centre.lat * RAD);
+  const px = o => o.ll.lon * kx, py = o => -o.ll.lat;
+  let x0 = Math.min(...shown.map(px)), x1 = Math.max(...shown.map(px));
+  let y0 = Math.min(...shown.map(py)), y1 = Math.max(...shown.map(py));
+  const MINSPAN = 0.0035;                       /* ~390 m — stops absurd zoom */
+  if(x1-x0 < MINSPAN*kx){ const m=(x0+x1)/2, h=MINSPAN*kx/2; x0=m-h; x1=m+h; }
+  if(y1-y0 < MINSPAN){ const m=(y0+y1)/2, h=MINSPAN/2; y0=m-h; y1=m+h; }
+  const padX = (x1-x0)*0.10, padY = (y1-y0)*0.10;
+  x0-=padX; x1+=padX; y0-=padY; y1+=padY;
+
+  /* the frame takes the shape of the ground, within reason — no dead paper */
+  const iw = VB.w - VB.l - VB.r;
+  const ih = Math.round(Math.min(Math.max(iw*((y1-y0)/(x1-x0)), iw*0.62), iw*1.30));
+  const H  = ih + VB.t + VB.b;
+  const scale = Math.min(iw/(x1-x0), ih/(y1-y0));
+  const cx = (x0+x1)/2, cy = (y0+y1)/2;
+  const SX = v => VB.l + iw/2 + (v - cx)*scale;
+  const SY = v => VB.t + ih/2 + (v - cy)*scale;
+
+  /* graticule */
+  const latStep = niceStep(y1-y0), lonStep = niceStep((x1-x0)/kx);
+  const dec = s => Math.max(0, Math.ceil(-Math.log10(s)));
+  let grid = "", ticks = "";
+  for(let v = Math.ceil(-y1/latStep)*latStep; v <= -y0+1e-9; v += latStep){
+    const Y = SY(-v);
+    grid += '<line x1="' + VB.l + '" y1="' + Y.toFixed(1) + '" x2="' + (VB.w-VB.r) +
+            '" y2="' + Y.toFixed(1) + '"/>';
+    ticks += '<text x="' + (VB.l-3) + '" y="' + (Y+3).toFixed(1) +
+             '" text-anchor="end" class="tk">' + v.toFixed(dec(latStep)) + '</text>';
+  }
+  for(let v = Math.ceil((x0/kx)/lonStep)*lonStep; v <= x1/kx+1e-9; v += lonStep){
+    const X = SX(v*kx);
+    grid += '<line x1="' + X.toFixed(1) + '" y1="' + VB.t + '" x2="' + X.toFixed(1) +
+            '" y2="' + (H-VB.b) + '"/>';
+    ticks += '<text x="' + X.toFixed(1) + '" y="' + (H-VB.b+11) +
+             '" text-anchor="middle" class="tk">' + v.toFixed(dec(lonStep)) + '</text>';
+  }
+
+  /* walking route, and the food tour's own line under it */
+  let route = "";
+  const walk = shown.filter(o => o.k==="walk").sort((a,b)=>a.i-b.i);
+  if(walk.length > 1){
+    route = '<polyline class="route" points="' +
+      walk.map(o => SX(px(o)).toFixed(1) + "," + SY(py(o)).toFixed(1)).join(" ") + '"/>';
+  }
+  const tour = shown.filter(o => o.k==="taste").sort((a,b)=>a.i-b.i);
+  if(tour.length > 1){
+    route += '<polyline class="route taste" points="' +
+      tour.map(o => SX(px(o)).toFixed(1) + "," + SY(py(o)).toFixed(1)).join(" ") + '"/>';
+  }
+
+  /* de-collide markers, keeping a leader to the true spot */
+  const nodes = shown.map(o => {
+    const X = SX(px(o)), Y = SY(py(o));
+    return {o, x0:X, y0:Y, x:X, y:Y};
+  });
+  const MIN = 22, CAP = 26;
+  for(let it=0; it<90; it++){
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const a=nodes[i], b=nodes[j];
+        let dx=b.x-a.x, dy=b.y-a.y, d=Math.hypot(dx,dy);
+        if(d >= MIN) continue;
+        if(d < 0.01){ dx = (i%2?1:-1)*0.6; dy = (j%2?1:-1)*0.6; d = Math.hypot(dx,dy); }
+        const push = (MIN-d)/2 * 0.45 / d;
+        a.x -= dx*push; a.y -= dy*push; b.x += dx*push; b.y += dy*push;
+      }
+    }
+    nodes.forEach(n => { n.x += (n.x0-n.x)*0.03; n.y += (n.y0-n.y)*0.03; });
+  }
+  nodes.forEach(n => {
+    let dx=n.x-n.x0, dy=n.y-n.y0, d=Math.hypot(dx,dy);
+    if(d > CAP){ n.x = n.x0 + dx/d*CAP; n.y = n.y0 + dy/d*CAP; }
+    n.x = clamp(n.x, VB.l+11, VB.w-VB.r-11);
+    n.y = clamp(n.y, VB.t+11, H-VB.b-11);
+  });
+
+  let leaders = "", pins = "";
+  nodes.forEach(n => {
+    if(Math.hypot(n.x-n.x0, n.y-n.y0) > 4){
+      leaders += '<line class="lead" x1="' + n.x0.toFixed(1) + '" y1="' + n.y0.toFixed(1) +
+                 '" x2="' + n.x.toFixed(1) + '" y2="' + n.y.toFixed(1) + '"/>' +
+                 '<circle class="true" cx="' + n.x0.toFixed(1) + '" cy="' + n.y0.toFixed(1) + '" r="1.4"/>';
+    }
+    pins += pinSVG(n.o, n.x, n.y);
+  });
+
+  /* scale bar and north arrow */
+  const mPerUnit = 110574/scale;
+  let barM = BAR_STEPS[0];
+  for(const s of BAR_STEPS){ barM = s; if(s/mPerUnit >= 45) break; }
+  const barLen = barM/mPerUnit;
+  const bx = VB.l + 4, by = H - VB.b - 8;
+  const bar = '<g class="bar"><line x1="' + bx + '" y1="' + by + '" x2="' + (bx+barLen).toFixed(1) +
+    '" y2="' + by + '"/><line x1="' + bx + '" y1="' + (by-3) + '" x2="' + bx + '" y2="' + (by+3) + '"/>' +
+    '<line x1="' + (bx+barLen).toFixed(1) + '" y1="' + (by-3) + '" x2="' + (bx+barLen).toFixed(1) +
+    '" y2="' + (by+3) + '"/><text x="' + (bx+barLen/2).toFixed(1) + '" y="' + (by-6) +
+    '" text-anchor="middle" class="tk">' + (barM<1000 ? barM+" m" : (barM/1000)+" km") + '</text></g>';
+  const nx = VB.w - VB.r - 12, ny = VB.t + 10;
+  const north = '<g class="rose"><line x1="' + nx + '" y1="' + (ny+16) + '" x2="' + nx + '" y2="' + ny +
+    '"/><polygon points="' + nx + ',' + (ny-4) + ' ' + (nx-3.2) + ',' + (ny+2) + ' ' +
+    (nx+3.2) + ',' + (ny+2) + '"/><text x="' + nx + '" y="' + (ny+26) +
+    '" text-anchor="middle" class="tk">N</text></g>';
+
+  host.innerHTML = '<svg viewBox="0 0 ' + VB.w + ' ' + H +
+    '" role="img" aria-label="Chart of ' + esc(p.name) + '">' +
+    '<g class="gr">' + grid + '</g>' +
+    '<rect class="frm" x="' + VB.l + '" y="' + VB.t + '" width="' + iw + '" height="' + ih + '"/>' +
+    ticks + route + leaders + bar + north + pins + '</svg>';
+
+  const svg = host.querySelector("svg");
+  proj = {svg, W:VB.w, H, mPerUnit,
+          toXY:(lat,lon) => ({x:SX(lon*kx), y:SY(-lat)})};
+}
+
+/* ============================================================
+   The real map — OpenStreetMap tiles under the same pins
+   ============================================================ */
+function fitZoom(list, W, H){
+  if(!list.length) return 16;
+  const lats = list.map(o=>o.ll.lat), lons = list.map(o=>o.ll.lon);
+  const a = {lat:Math.max(...lats), lon:Math.min(...lons)};
+  const b = {lat:Math.min(...lats), lon:Math.max(...lons)};
+  for(let z = MAXZ; z >= MINZ; z--){
+    const p1 = worldPx(a.lat, a.lon, z), p2 = worldPx(b.lat, b.lon, z);
+    if((p2.x-p1.x) <= W*0.84 && (p2.y-p1.y) <= H*0.84) return z;
+  }
+  return MINZ;
+}
+
+function fitPort(){
+  const host = $("#viewbox"); if(!host) return;
+  const s = chartSets();
+  /* frame the town, not the day trips — the far pins are still on the map,
+     they are just outside the opening view. */
+  const town = s.near.filter(o => layers[o.k]);
+  const list = town.length ? town : (s.shown.length ? s.shown : s.all);
+  const lats = list.map(o=>o.ll.lat), lons = list.map(o=>o.ll.lon);
+  mapView = {
+    lat: (Math.max(...lats)+Math.min(...lats))/2,
+    lon: (Math.max(...lons)+Math.min(...lons))/2,
+    z: fitZoom(list, host.clientWidth || 360, host.clientHeight || 420)
+  };
+  followMe = false;
+}
+function centreOn(lat, lon){
+  if(!mapView) return;
+  mapView.lat = lat; mapView.lon = lon;
+  drawMap(); paintMe();
+}
+
+function drawMap(){
+  const host = $("#viewbox"); if(!host) return;
+  if(!host.querySelector(".tiles")){
+    tiles = new Map();
+    host.innerHTML =
+      '<div class="tiles"></div>' +
+      '<svg class="ovl"></svg>' +
+      '<div class="zoomctl">' +
+        '<button data-zoom="1" aria-label="Zoom in">+</button>' +
+        '<button data-zoom="-1" aria-label="Zoom out">&minus;</button></div>' +
+      '<div class="fsctl"><button data-fullmap="1"></button></div>' +
+      '<div class="attrib">&copy; <a href="https://www.openstreetmap.org/copyright" ' +
+        'target="_blank" rel="noopener">OpenStreetMap</a> contributors</div>';
+    paintFullBtn();
+    bindMapGestures(host);
+    watchMapSize(host);
+  }
+  const W = host.clientWidth, H = host.clientHeight;
+  if(!W || !H) return;
+  if(!mapView) fitPort();
+
+  const c = worldPx(mapView.lat, mapView.lon, mapView.z);
+  const oX = c.x - W/2, oY = c.y - H/2;
+
+  /* tiles */
+  const layer = host.querySelector(".tiles");
+  const tz = clamp(Math.round(mapView.z), MINZ, MAXZ);
+  const k = Math.pow(2, mapView.z - tz);
+  const n = Math.pow(2, tz), size = 256*k;
+  const wx = oX/k, wy = oY/k;
+  const tx0 = Math.floor(wx/256), tx1 = Math.floor((wx + W/k)/256);
+  const ty0 = Math.floor(wy/256), ty1 = Math.floor((wy + H/k)/256);
+  const want = new Set();
+  for(let tx = tx0; tx <= tx1; tx++){
+    for(let ty = ty0; ty <= ty1; ty++){
+      if(ty < 0 || ty >= n) continue;
+      const wrap = ((tx % n) + n) % n, key = tz+"/"+wrap+"/"+ty;
+      want.add(key);
+      let img = tiles.get(key);
+      if(!img){
+        img = new Image(); img.alt = ""; img.decoding = "async";
+        img.addEventListener("error", () => img.classList.add("dead"));
+        img.src = TILE_URL.replace("{z}",tz).replace("{x}",wrap).replace("{y}",ty);
+        layer.appendChild(img); tiles.set(key, img);
+      }
+      img.style.width = img.style.height = size.toFixed(2)+"px";
+      img.style.left = (tx*256*k - oX).toFixed(2)+"px";
+      img.style.top  = (ty*256*k - oY).toFixed(2)+"px";
+    }
+  }
+  tiles.forEach((el, key) => { if(!want.has(key)){ el.remove(); tiles.delete(key); } });
+
+  proj = {svg: host.querySelector(".ovl"), W, H,
+          mPerUnit: mPerPx(mapView.lat, mapView.z),
+          toXY:(lat,lon) => { const q = worldPx(lat, lon, mapView.z);
+                              return {x:q.x-oX, y:q.y-oY}; }};
+  proj.svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+  drawOverlay();
+}
+
+function drawOverlay(){
+  if(!proj || !proj.svg) return;
+  const {shown} = chartSets();
+  let route = "";
+  const walk = shown.filter(o => o.k==="walk").sort((a,b)=>a.i-b.i);
+  if(walk.length > 1){
+    route = '<polyline class="route" points="' + walk.map(o => {
+      const q = proj.toXY(o.ll.lat, o.ll.lon);
+      return q.x.toFixed(1)+","+q.y.toFixed(1);
+    }).join(" ") + '"/>';
+  }
+  const tour = shown.filter(o => o.k==="taste").sort((a,b)=>a.i-b.i);
+  if(tour.length > 1){
+    route += '<polyline class="route taste" points="' + tour.map(o => {
+      const q = proj.toXY(o.ll.lat, o.ll.lon);
+      return q.x.toFixed(1)+","+q.y.toFixed(1);
+    }).join(" ") + '"/>';
+  }
+  const pins = shown.map(o => {
+    const q = proj.toXY(o.ll.lat, o.ll.lon);
+    return (q.x > -30 && q.x < proj.W+30 && q.y > -30 && q.y < proj.H+30)
+      ? pinSVG(o, q.x, q.y) : "";
+  }).join("");
+  proj.svg.innerHTML = route + pins;
+  paintMe();
+}
+
+function pinSVG(o, x, y){
+  const k = keyOf(o), col = KIND[o.k].col;
+  let shape;
+  if(o.k === "walk")       shape = '<circle r="9.6" fill="' + col + '"/>';
+  else if(o.k === "eat")   shape = '<rect x="-8.4" y="-8.4" width="16.8" height="16.8" fill="' + col + '"/>';
+  else if(o.k === "taste") shape = '<polygon points="0,-11.5 10.5,7 -10.5,7" fill="' + col + '"/>';
+  else if(o.k === "buy")   shape = '<rect x="-8" y="-8" width="16" height="16" transform="rotate(45)" fill="' + col + '"/>';
+  else                     shape = '<circle r="9.8" fill="' + col + '"/>' +
+                                   '<circle r="7.2" fill="none" stroke="#FBFAF6" stroke-width="1"/>';
+  return '<g class="pin' + (sel===k ? " on" : "") + '" data-pin="' + k +
+    '" transform="translate(' + x.toFixed(1) + ',' + y.toFixed(1) + ')" role="button" ' +
+    'tabindex="0" aria-label="' + esc(o.n) + '">' +
+    '<circle class="halo" r="15"/>' + shape +
+    '<text y="' + (o.k === "taste" ? "5.4" : "3.3") + '" text-anchor="middle">' + o.num + '</text></g>';
+}
+
+/* ============================================================
+   Map gestures — drag to pan, pinch or wheel to zoom
+   ============================================================ */
+function bindMapGestures(host){
+  const pts = new Map();
+  let last = null, pinch = null, raf = 0;
+  const redraw = () => { if(raf) return;
+    raf = requestAnimationFrame(() => { raf = 0; drawMap(); paintMe(); }); };
+
+  host.addEventListener("pointerdown", e => {
+    if(e.target.closest("[data-zoom],[data-fullmap],[data-pin],.attrib")) return;
+    host.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    if(pts.size === 1) last = {x:e.clientX, y:e.clientY};
+    if(pts.size === 2){
+      const [a,b] = [...pts.values()];
+      pinch = {d: Math.hypot(a.x-b.x, a.y-b.y), z: mapView.z};
+    }
+  });
+
+  host.addEventListener("pointermove", e => {
+    if(!pts.has(e.pointerId) || !mapView) return;
+    pts.set(e.pointerId, {x:e.clientX, y:e.clientY});
+    const r = host.getBoundingClientRect();
+    if(pts.size === 2 && pinch){
+      const [a,b] = [...pts.values()];
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if(d > 8){
+        followMe = false;
+        zoomAt(pinch.z + Math.log2(d/pinch.d),
+               (a.x+b.x)/2 - r.left, (a.y+b.y)/2 - r.top, host);
+        redraw();
+      }
+      return;
+    }
+    if(pts.size === 1 && last){
+      const dx = e.clientX - last.x, dy = e.clientY - last.y;
+      if(Math.abs(dx) + Math.abs(dy) < 1) return;
+      last = {x:e.clientX, y:e.clientY};
+      followMe = false;
+      const c = worldPx(mapView.lat, mapView.lon, mapView.z);
+      const q = pxToLL(c.x - dx, c.y - dy, mapView.z);
+      mapView.lat = clamp(q.lat, -85, 85); mapView.lon = q.lon;
+      redraw();
+    }
+  });
+
+  const end = e => { pts.delete(e.pointerId);
+    if(pts.size < 2) pinch = null;
+    if(pts.size === 0) last = null; else last = [...pts.values()][0]; };
+  host.addEventListener("pointerup", end);
+  host.addEventListener("pointercancel", end);
+
+  host.addEventListener("wheel", e => {
+    if(!mapView) return;
+    e.preventDefault();
+    const r = host.getBoundingClientRect();
+    followMe = false;
+    zoomAt(mapView.z - Math.sign(e.deltaY)*0.5, e.clientX - r.left, e.clientY - r.top, host);
+    redraw();
+  }, {passive:false});
+}
+
+/* The box changes size on full screen, on rotation and on a window drag,
+   and only some of those raise a window resize. Watch the box itself. */
+function watchMapSize(host){
+  if(typeof ResizeObserver !== "function") return;
+  let last = "", raf = 0;
+  new ResizeObserver(() => {
+    if(raf) return;
+    raf = requestAnimationFrame(() => {
+      raf = 0;
+      const k = host.clientWidth + "x" + host.clientHeight;
+      if(k === last || !host.clientWidth || !host.isConnected) return;
+      last = k; drawMap(); paintMe();
+    });
+  }).observe(host);
+}
+
+/* ============================================================
+   Full screen — the whole phone for the map. Native fullscreen
+   where it exists, a fixed overlay where it does not.
+   ============================================================ */
+const FS_ICON = {
+  in:  '<svg viewBox="0 0 20 20" aria-hidden="true">' +
+       '<path d="M8 2H2v6M12 2h6v6M8 18H2v-6M12 18h6v-6"/></svg>',
+  out: '<svg viewBox="0 0 20 20" aria-hidden="true">' +
+       '<path d="M2 7h5V2M18 7h-5V2M2 13h5v5M18 13h-5v5"/></svg>'
+};
+
+function paintFullBtn(){
+  const b = document.querySelector("[data-fullmap]"); if(!b) return;
+  b.innerHTML = mapFull ? FS_ICON.out : FS_ICON.in;
+  b.setAttribute("aria-label", mapFull ? "Leave full screen" : "Full screen map");
+  b.setAttribute("aria-pressed", mapFull);
+  b.title = mapFull ? "Leave full screen" : "Full screen map";
+}
+
+const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+
+function enterMapFull(){
+  const host = $("#viewbox"); if(!host || mode !== "map" || mapFull) return;
+  mapFull = true;
+  host.classList.add("fs");
+  document.body.classList.add("fsmap");
+  const req = host.requestFullscreen || host.webkitRequestFullscreen;
+  if(req){ try{ Promise.resolve(req.call(host)).catch(() => {}); }catch(e){} }
+  paintFullBtn();
+  requestAnimationFrame(() => { drawMap(); paintMe(); });
+}
+
+function exitMapFull(){
+  if(!mapFull) return;
+  mapFull = false;
+  const host = $("#viewbox");
+  if(host) host.classList.remove("fs");
+  document.body.classList.remove("fsmap");
+  if(fsElement()){
+    const off = document.exitFullscreen || document.webkitExitFullscreen;
+    if(off){ try{ Promise.resolve(off.call(document)).catch(() => {}); }catch(e){} }
+  }
+  paintFullBtn();
+  requestAnimationFrame(() => {
+    if(tab === "chart" && mode === "map"){ drawMap(); paintMe(); }
+  });
+}
+
+/* the browser can drop out of fullscreen on its own — Esc, a swipe, a navigation */
+["fullscreenchange","webkitfullscreenchange"].forEach(ev =>
+  document.addEventListener(ev, () => { if(!fsElement()) exitMapFull(); rehomeHail(); }));
+
+/* Esc gets us out either way — the browser handles native fullscreen itself,
+   the overlay has nobody else to do it */
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && mapFull) exitMapFull();
+});
+
+function zoomAt(z, sx, sy, host){
+  const W = host.clientWidth, H = host.clientHeight;
+  const c0 = worldPx(mapView.lat, mapView.lon, mapView.z);
+  const anchor = pxToLL(c0.x - W/2 + sx, c0.y - H/2 + sy, mapView.z);
+  mapView.z = clamp(z, MINZ, MAXZ);
+  const a = worldPx(anchor.lat, anchor.lon, mapView.z);
+  const c = pxToLL(a.x + (W/2 - sx), a.y + (H/2 - sy), mapView.z);
+  mapView.lat = clamp(c.lat, -85, 85); mapView.lon = c.lon;
+}
+
+/* ============================================================
+   GPX — hand the whole port to any map app, offline
+   ============================================================ */
+function gpxFor(p){
+  const x = s => String(s==null?"":s).replace(/[&<>'"]/g,
+    c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&apos;",'"':"&quot;"}[c]));
+  const wpts = plotted(p).map(o => {
+    const L = ll(o.c);
+    return '  <wpt lat="' + L.lat + '" lon="' + L.lon + '">\n' +
+      '    <name>' + x(KIND[o.k].t.toUpperCase().slice(0,1) + o.num + " " + o.n) + '</name>\n' +
+      '    <desc>' + x((o.sub ? o.sub + " — " : "") + (o.d||"") +
+                      (o.q ? " Where to find it: " + o.q : "")) + '</desc>\n' +
+      '    <type>' + o.k + '</type>\n  </wpt>';
+  }).join("\n");
+  const rte = '  <rte>\n    <name>' + x(p.name + " — walking order") + '</name>\n' +
+    p.stops.filter(s => ll(s.c)).map(s => { const L = ll(s.c);
+      return '    <rtept lat="' + L.lat + '" lon="' + L.lon + '"><name>' + x(s.n) + '</name></rtept>';
+    }).join("\n") + '\n  </rte>';
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<gpx version="1.1" creator="Shore Book · Hong Kong to Singapore" ' +
+    'xmlns="http://www.topografix.com/GPX/1/1">\n' +
+    '  <metadata><name>' + x("Shore Book — " + p.name) + '</name></metadata>\n' +
+    wpts + '\n' + rte + '\n</gpx>\n';
+}
+
+function download(name, text, mime){
+  try{
+    const url = URL.createObjectURL(new Blob([text], {type:mime}));
+    const a = document.createElement("a");
+    a.href = url; a.download = name; a.style.display = "none";
+    document.body.appendChild(a); a.click();
+    setTimeout(() => { URL.revokeObjectURL(url); a.remove(); }, 1500);
+  }catch(e){
+    window.open("data:" + mime + ";charset=utf-8," + encodeURIComponent(text), "_blank");
+  }
+}
+
+/* ============================================================
+   RENDER — panel
+   ============================================================ */
+function renderPanel(){
+  const p = port();
+  if(tab === "walk")        $("#panel").innerHTML = renderWalk();
+  else if(tab === "eat")    $("#panel").innerHTML = renderCards("eat");
+  else if(tab === "taste")  $("#panel").innerHTML = renderTaste();
+  else if(tab === "buy")    $("#panel").innerHTML = renderBuy();
+  else if(tab === "screen") $("#panel").innerHTML = renderCards("screen",
+    "What was filmed here, and what only pretends to have been. Everything below is a real location you can stand on unless the card says otherwise. " +
+    "Each card tells you where to find the scene — season and episode where there is one, otherwise roughly where in the running time to scrub. " +
+    "Clock times are approximate, and where nothing honest can be cited the card says so.");
+  else if(tab === "chart"){ $("#panel").innerHTML = chartShell(); drawView(); }
+  else $("#panel").innerHTML = '<ul class="know">' +
+    p.know.map(k => "<li>" + esc(k) + "</li>").join("") + "</ul>";
+}
+
+function renderAll(){
+  renderPortRail(); renderHead(); renderTide(); renderPanel();
+  document.querySelectorAll(".tab").forEach(t =>
+    t.setAttribute("aria-selected", t.dataset.tab === tab));
+}
+
+/* ============================================================
+   EVENTS
+   ============================================================ */
+document.addEventListener("click", e => {
+  unlockAudio();   /* iOS wakes the audio clock for a finger and nothing else */
+
+  const pb = e.target.closest("[data-port]");
+  if(pb){ exitMapFull(); cur = pb.dataset.port; sel = null; mapView = null; followMe = false;
+    buzz.near = {}; clearHail();      /* pin keys repeat from port to port */
+    store.set("sbhk.port", cur); renderAll(); window.scrollTo(0,0); return; }
+
+  const tb = e.target.closest(".tab");
+  if(tb){ exitMapFull(); tab = tb.dataset.tab; renderAll(); return; }
+
+  const md = e.target.closest("[data-setmode]");
+  if(md){ if(md.dataset.setmode === mode) return;
+    exitMapFull();
+    mode = md.dataset.setmode; store.set("sbhk.mode", mode);
+    renderPanel(); return; }
+
+  const lay = e.target.closest("[data-layer]");
+  if(lay){ const k = lay.dataset.layer; layers[k] = !layers[k];
+    if(sel && sel.split(":")[0] === k && !layers[k]) sel = null;
+    renderPanel(); return; }
+
+  const fit = e.target.closest("[data-fit]");
+  if(fit){ fitAll = !fitAll; renderPanel(); return; }
+
+  const fp = e.target.closest("[data-fitport]");
+  if(fp){ fitPort(); drawMap(); paintMe(); paintLocBar(); return; }
+
+  const fs = e.target.closest("[data-fullmap]");
+  if(fs){ mapFull ? exitMapFull() : enterMapFull(); return; }
+
+  const zm = e.target.closest("[data-zoom]");
+  if(zm){ const host = $("#viewbox");
+    if(host && mapView){ followMe = false;
+      zoomAt(mapView.z + (+zm.dataset.zoom), host.clientWidth/2, host.clientHeight/2, host);
+      drawMap(); paintMe(); }
+    return; }
+
+  const gb = e.target.closest("[data-geo]");
+  if(gb){ const what = gb.dataset.geo;
+    if(what === "on") startGeo();
+    else if(what === "off") stopGeo();
+    else if(what === "follow"){ followMe = !followMe;
+      if(followMe && geo.fix){ mapView.z = Math.max(mapView.z, 17);
+        centreOn(geo.fix.lat, geo.fix.lon); }
+      paintLocBar(); }
+    return; }
+
+  const bz = e.target.closest("[data-buzz]");
+  if(bz){
+    buzz.on = !buzz.on; store.set("sbhk.buzz", buzz.on ? "1" : "0");
+    if(buzz.on){ buzz.near = {}; buzz.last = 0; unlockAudio();
+      if(!checkProximity()){ fire([40]); tapSwitch([40]); } }
+    else { clearTimeout(buzz.retry); buzz.retry = 0; clearHail(); }
+    paintLocBar(); return;
+  }
+
+  const sd = e.target.closest("[data-sound]");
+  if(sd){
+    sound.on = !sound.on; store.set("sbhk.sound", sound.on ? "1" : "0");
+    if(sound.on){ unlockAudio(); chime("walk"); }   /* a note, so you know the volume */
+    paintLocBar(); return;
+  }
+
+  const bt = e.target.closest("[data-bztest]");
+  if(bt){ if(BUZZ[bt.dataset.bztest]) signal(bt.dataset.bztest); return; }
+
+  const hx = e.target.closest("[data-hailx]");
+  if(hx){ clearHail(); return; }
+
+  const gp = e.target.closest("[data-gpx]");
+  if(gp){ const p = port();
+    download("shore-book-" + p.id + ".gpx", gpxFor(p), "application/gpx+xml"); return; }
+
+  const pin = e.target.closest("[data-pin]");
+  if(pin){ selectPin(pin.dataset.pin, false);
+    const c = sel && $("#card-" + CSS.escape(sel));
+    if(c) c.scrollIntoView({block:"nearest", behavior:"smooth"});
+    return; }
+
+  const go = e.target.closest("[data-goto]");
+  if(go){ const k = go.dataset.goto; clearHail();
+    if(tab === "chart"){ selectPin(k, true); }
+    else { sel = k; tab = "chart"; renderAll();
+      if(mode === "map") selectPin(k, true);
+      window.scrollTo({top:0, behavior:"smooth"}); }
+    return; }
+
+  const chk = e.target.closest("[data-check]");
+  if(chk){
+    const i = +chk.dataset.check, d = getDone();
+    const k = d.indexOf(i); k > -1 ? d.splice(k,1) : d.push(i);
+    setDone(d); renderPanel(); return;
+  }
+
+  const op = e.target.closest("[data-open]");
+  if(op){ op.parentElement.classList.toggle("open"); return; }
+});
+
+/* pins are SVG groups — give them a keyboard */
+document.addEventListener("keydown", e => {
+  if(e.key !== "Enter" && e.key !== " ") return;
+  const pin = e.target.closest && e.target.closest("g[data-pin]");
+  if(!pin) return;
+  e.preventDefault();
+  selectPin(pin.dataset.pin, false);
+});
+
+/* the map is sized in CSS pixels, so it has to be redrawn when they change */
+let rz = 0;
+window.addEventListener("resize", () => {
+  if(tab !== "chart" || mode !== "map") return;
+  clearTimeout(rz); rz = setTimeout(() => { drawMap(); paintMe(); }, 150);
+});
+
+$("#ashore").addEventListener("change", e => {
+  setShipTime(cur, "ashore", e.target.value, port().ashore); renderTide(); renderPanel(); });
+$("#allAboard").addEventListener("change", e => {
+  setShipTime(cur, "aboard", e.target.value, port().aboard); renderTide(); renderPanel(); });
+$("#reset").addEventListener("click", () => { setDone([]); renderPanel(); });
+
+const d = new Date();
+$("#today").textContent = d.toLocaleDateString("en-GB",
+  {weekday:"short", day:"numeric", month:"short"});
+
+renderAll();
+setInterval(() => { renderTide(); if(tab==="walk") renderPanel(); }, 60000);
+
+/* If location was on last time the permission is already granted — resume quietly. */
+if(store.get("sbhk.geo") === "1") startGeo();
+
+/* Offline: cache the app on first load so it runs with no signal. */
+if("serviceWorker" in navigator){
+  /* Cache-first means an old copy of the book can sit on a phone indefinitely.
+     Ask for a new one on every launch, and again hourly if the app is left
+     open, so a corrected sailing time reaches the person holding it. */
+  const hadWorker = !!navigator.serviceWorker.controller;
+  let swapping = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if(!hadWorker || swapping) return;   /* first install: nothing to replace */
+    swapping = true;
+    location.reload();
+  });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").then(reg => {
+      reg.update().catch(() => {});
+      setInterval(() => reg.update().catch(() => {}), 3600000);
+    }).catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
